@@ -1,0 +1,302 @@
+---
+title: "An introduction of CancerSubtypes"
+author: "Taosheng Xu,Thuc Duy Le"
+date: '`r Sys.Date()`'
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CancerSubtypes} 
+  %\VignetteEncoding{UTF-8} 
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+
+# 1. Introduction
+
+*CancerSubtypes* is a  package for cancer subtype analysis that includes various functions from dataset processing to result validation. In *CancerSubtypes* package, we provide a unified framework for analysing cancer subtpes from raw data to result visualisation. The main functions include genomic data pre-processing, cancer subtypes identification, results validation, visualization and comparison. *CancerSubtypes* provides the common data imputation and normalization methods for the genomic data pre-processing. Meanwhile, there are four feature selection methods to screen the key features in genomic dataset. The common cancer subtypes identification methods are integrated in this package such as **Consensus clustering (CC)** [From R package *ConsensusClusterPlus*], **Consensus Nonnegative matrix factorization (CNMF)** [From R package *NMF*],  **Integrative clustering (iCluster)**[From R package *iCluster*],  **Similarity Network Fusion (SNF)**   [From R package *SNFtool*] and  **Combined SNF and CC (SNF.CC)**. We implement these cancer subtypes identification methods in a unified input and output data format. The process of analysing cancer subtypes can be easily conducted in a standard workflow. *CancerSubtypes* provides the most useful feature selection methods and subtypes validation method and helps users to focus on their cancer genomic data and the results from different methods can be compared and evaluation in visualization way easily.
+
+
+---
+  
+# 2 Data processing
+For the basic data processing, *CancerSubtypes* provides the methods for data distribution check, imputation and normalization and feature selection. There are four feature selection methods (Variance-Var, Median Absolute Deviation-MAD, COX model, Principal Component Analysis-PCA) in *CancerSubtypes* package. All the data processing methods possess the same input and output data format.
+
+### 2.1 Basic processing
+
+#### 2.1.1 Analysis the raw data by check the data distribution.
+```{r message = FALSE}
+### Prepare a TCGA gene expression dataset for analysis. 
+library(CancerSubtypes)
+library("RTCGA.mRNA")
+rm(list = ls())
+data(BRCA.mRNA)
+mRNA=t(as.matrix(BRCA.mRNA[,-1]))
+colnames(mRNA)=BRCA.mRNA[,1]
+
+###To observe the mean, variance and Median Absolute Deviation distribution of the dataset, it helps users to get the distribution characteristics of the data, e.g. To evaluate whether the dataset fits a normal distribution or not.
+data.checkDistribution(mRNA)
+```
+
+#### 2.1.2 Data imputation for features with missing values (NAs)
+The raw genomic dataset always contains missing observations, especially in microarray gene expression data. It is not wise to remove all the features with missing observations in very few samples because the useful information will be discarded. The common method is to impute the proper value for the missing observations. *CancerSubtypes* integrates three common imputation methods for genomic datasets.
+```{r eval = FALSE}
+index=which(is.na(mRNA))
+res1=data.imputation(mRNA,fun="median")
+res2=data.imputation(mRNA,fun="mean")
+res3=data.imputation(mRNA,fun="microarray")
+```
+#### 2.1.3 Data normalization.
+```{r}
+result1=data.normalization(mRNA,type="feature_Median",log2=FALSE)
+result2=data.normalization(mRNA,type="feature_zsocre",log2=FALSE)
+```
+
+### 2.2 Feature selection
+
+#### 2.2.1 Feature selection based on the most variance.
+```{r eval = FALSE}
+###The top 1000 most variance features will be selected.
+data1=FSbyVar(mRNA, cut.type="topk",value=1000)
+###The features with (variance>0.5) are selected.
+data2=FSbyVar(mRNA, cut.type="cutoff",value=0.5)
+```
+
+#### 2.2.2 Feature selection based on the most variant Median Absolute Deviation (MAD).
+```{r eval = FALSE}
+data1=FSbyMAD(mRNA, cut.type="topk",value=1000)
+data2=FSbyMAD(mRNA, cut.type="cutoff",value=0.5)
+```
+
+#### 2.2.3 Feature dimension reduction and extraction based on Principal Component Analysis.
+```{r eval = FALSE}
+mRNA1=data.imputation(mRNA,fun="microarray")
+data1=FSbyPCA(mRNA1, PC_percent=0.9,scale = TRUE)
+```
+
+#### 2.2.4 Feature selection based on Cox regression model.
+```{r}
+data(GeneExp)
+data(time)
+data(status)
+data1=FSbyCox(GeneExp,time,status,cutoff=0.05)
+```
+
+---
+  
+# 3. Clustering methods for Cancer subtype identification.
+
+### 3.1 Consensus Clustering for cancer subtype identification
+
+Consensus clustering (CC, 2003) as an unsupervised subtypes discovery method, was a frequently used and valuable approach in many genomic studies and have lots of successful applications.
+
+```{r eval = FALSE}
+### The input dataset is single gene expression matrix.
+data(GeneExp)
+result=ExecuteCC(clusterNum=3,d=GeneExp,maxK=10,clusterAlg="hc",distance="pearson",title="GBM")
+
+### The input dataset is multi-genomics data as a list
+data(GeneExp)
+data(miRNAExp)
+GBM=list(GeneExp=GeneExp,miRNAExp=miRNAExp)
+result=ExecuteCC(clusterNum=3,d=GBM,maxK=10,clusterAlg="hc",distance="pearson",title="GBM")
+```
+
+### 3.2 Consensus Non-negative matrix factorization for cancer subtype identification
+
+Non-negative matrix factorization (CNMF, 2004), as an effective dimension reduction method, was used in distinguishing molecular patterns for high-dimensional genomic data and provided a powerful method for class discovery.  We apply the *NMF* package to execute the non-negative matrix factorization for the cancer genomic dataset. So this method allows users to input the number of core-CPUs for parallel processing.
+
+```{r eval = FALSE}
+### The input dataset is single gene expression matrix.
+data(GeneExp)
+result=ExecuteCNMF(GeneExp,clusterNum=3,nrun=30)
+
+### The input dataset is multi-genomics data as a list
+data(GeneExp)
+data(miRNAExp)
+GBM=list(GeneExp=GeneExp,miRNAExp=miRNAExp)
+result=ExecuteCNMF(GBM,clusterNum=3,nrun=30)
+```
+
+
+### 3.3 Integrative clustering for cancer subtype identification
+
+Integrative clustering (iCluster, 2009) used a joint latent variable model for integrative clustering for multiple types of omics data.
+
+```{r eval = FALSE}
+data(GeneExp)
+data(miRNAExp)
+data1=FSbyVar(GeneExp, cut.type="topk",value=1000)
+data2=FSbyVar(miRNAExp, cut.type="topk",value=300)
+GBM=list(GeneExp=data1,miRNAExp=data2)
+result=ExecuteiCluster(datasets=GBM, k=3, lambda=list(0.44,0.33,0.28))
+```
+
+
+### 3.4 Similarity network fusion for cancer subtype identification
+
+Similarity network fusion (SNF, 2014) is a computational method on fusion similarity network for aggregating multi-omics data.
+
+```{r eval = FALSE}
+data(GeneExp)
+data(miRNAExp)
+GBM=list(GeneExp=GeneExp,miRNAExp=miRNAExp)
+result=ExecuteSNF(GBM, clusterNum=3, K=20, alpha=0.5, t=20)
+```
+
+### 3.5 Ensemble method of SNF and CC for cancer subtype identification
+
+We propose to combine the SNF and CC together to generate a new cancer subtypes identification method.
+
+```{r eval = FALSE}
+data(GeneExp)
+data(miRNAExp)
+data(time)
+data(status)
+data1=FSbyCox(GeneExp,time,status,cutoff=0.05)
+data2=FSbyCox(miRNAExp,time,status,cutoff=0.05)
+GBM=list(GeneExp=data1,miRNAExp=data2)
+result=ExecuteSNF.CC(GBM, clusterNum=3, K=20, alpha=0.5, t=20,maxK = 10, pItem = 0.8,reps=500, 
+                     title = "GBM", plot = "png", finalLinkage ="average")
+```
+
+---
+  
+# 4 Results validation, interpretation and visualization for the identified cancer subtypes.
+  
+The identified cancer subtypes by the computational methods should be in accordance with biological meanings and reveal the distinct molecular patterns. 
+
+### 4.1 Silhouette width
+Silhouette width is used to measure how similar a sample is matched to its identified subtype compared to other subtypes, a high value indicates that the sample is well matched. Each horizontal line represents a sample in the Silhouette plot. The length of the line is the silhouette width the sample has.
+
+```{r}
+data(GeneExp)
+data(miRNAExp)
+GBM=list(GeneExp=GeneExp,miRNAExp=miRNAExp)
+result=ExecuteSNF(GBM, clusterNum=3, K=20, alpha=0.5, t=20,plot = FALSE)
+
+###Similarity smaple matrix
+sil=silhouette_SimilarityMatrix(result$group, result$distanceMatrix)
+plot(sil)
+```
+
+Note: If the input matrix is a dissimilarity matrix between samples, please use the *silhouette()* in cluster package to compute the silhouette width, otherwise a wrong result will be generated. 
+
+```{r}
+sil1=silhouette(result$group, result$distanceMatrix)
+plot(sil1)  ##wrong result
+```
+
+All the samples have the negative silhouette width.
+
+### 4.2 Survival analysis
+
+Survival analysis is used to judge the different survival patterns between subtypes.
+
+```{r}
+data(GeneExp)
+data(miRNAExp)
+data(time)
+data(status)
+data1=FSbyCox(GeneExp,time,status,cutoff=0.05)
+data2=FSbyCox(miRNAExp,time,status,cutoff=0.05)
+GBM=list(GeneExp=data1,miRNAExp=data2)
+
+#### 1.ExecuteSNF
+result1=ExecuteSNF(GBM, clusterNum=3, K=20, alpha=0.5, t=20,plot = FALSE)
+group1=result1$group
+distanceMatrix1=result1$distanceMatrix
+p_value=survAnalysis(mainTitle="GBM1",time,status,group1,
+                     distanceMatrix1,similarity=TRUE)
+```
+
+This is a combination figure with three parts: Survival curves, heatmap of the sample similarity matrix and Silhouette width plots for the identified cancer subtypes. The samples in all of the plots have be reorganized by the identified caner subtypes. This kind of figure provides the visible results that can be easily evaluated.
+
+```{r results="hide",message=FALSE}
+#### 2.ExecuteSNF.CC
+result2=ExecuteSNF.CC(GBM, clusterNum=3, K=20, alpha=0.5, t=20,
+                      maxK = 5, pItem = 0.8,reps=500, 
+                      title = "GBM2", plot = "png", 
+                      finalLinkage ="average")
+```
+
+```{r}
+group2=result2$group
+distanceMatrix2=result2$distanceMatrix
+p_value=survAnalysis(mainTitle="GBM2",time,status,group2,
+                     distanceMatrix2,similarity=TRUE)
+
+```
+
+### 4.3 Statistical significance of clustering
+
+Statistical significance of clustering is a pure statistical approach to test the significance difference data distribution between subtypes. Different expression is to test the expression difference between each subtypes and a reference group (always a set of normal samples). 
+
+
+```{r,warning=FALSE}
+data(GeneExp)
+data(miRNAExp)
+data(time)
+data(status)
+GBM=list(GeneExp=GeneExp,miRNAExp=miRNAExp)
+result=ExecuteSNF(GBM, clusterNum=3, K=20, alpha=0.5, t=20,plot = FALSE)
+group=result$group
+sigclust=sigclustTest(miRNAExp,group, nsim=1000, nrep=1, icovest=1)
+sigclust
+```
+
+The SigClust summary plots show the distributions of cluster index (CI). The blue points, representing the simulated CIs, are plotted with random vertical jitter for better visualization. The solid and dotted lines correspond to the estimated nonparametric density and Gaussian density fit to the simulated CIs. The p-value show the significant level between the two subtypes. Please refer to [5] to get the more information about *sigclust*.
+
+### 4.4 Differential expression analysis
+
+Differential expression analysis is to test the expression difference between each subtypes and a reference group (always a set of normal samples). Here we apply *limma* package to conduct the different expression analysis between each subtypes and normal samples.
+
+```{r results="hide",message=FALSE,fig.show="hide"}
+library("RTCGA.mRNA")
+rm(list = ls())
+data(BRCA.mRNA)
+mRNA=t(as.matrix(BRCA.mRNA[,-1]))
+colnames(mRNA)=BRCA.mRNA[,1]
+mRNA1=data.imputation(mRNA,fun="microarray")
+mRNA1=FSbyMAD(mRNA1, cut.type="topk",value=5000)
+
+###Split the normal and tumor samples
+index=which(as.numeric(substr(colnames(mRNA1),14,15))>9)
+mRNA_normal=mRNA1[,index]
+mRNA_tumor=mRNA1[,-index]
+
+### Remove the duplicate samples
+index1=which(as.numeric(substr(colnames(mRNA_tumor),14,15))>1)
+mRNA_tumor=mRNA_tumor[,-index1]
+
+##### Identify cancer subtypes
+result=ExecuteCC(clusterNum=5,d=mRNA_tumor,maxK=5,clusterAlg="hc",distance="pearson",title="BRCA")
+group=result$group
+res=DiffExp.limma(Tumor_Data=mRNA_tumor,Normal_Data=mRNA_normal,group=group,topk=NULL,RNAseq=FALSE)
+```
+
+```{r}
+## Differently expression genes in subtype 1
+head(res[[1]])
+
+## Differently expression genes in subtype 2
+head(res[[2]])
+```
+---
+
+# 5 Conclusions
+The *CancerSubtypes* R package provides a suite of cancer subtypes analysis tools and embeds the analysis in a standardized workflow. It provides a powerful way to analyze cancer subtype on genome-wide scale.
+
+---
+# 6. References
+  [1] Monti, Stefano, et al. "Consensus clustering: a resampling-based method for class discovery and visualization of gene expression microarray data." Machine learning 52.1-2 (2003): 91-118.\cr
+
+[2] Brunet, Jean-Philippe, et al. "Metagenes and molecular pattern discovery using matrix factorization." Proceedings of the national academy of sciences 101.12 (2004): 4164-4169.\cr
+
+[3] Shen, Ronglai, Adam B. Olshen, and Marc Ladanyi. "Integrative clustering of multiple genomic data types using a joint latent variable model with application to breast and lung cancer subtype analysis." Bioinformatics 25.22 (2009): 2906-2912.\cr
+
+[4] Wang, Bo, et al. "Similarity network fusion for aggregating data types on a genomic scale." Nature methods 11.3 (2014): 333-337.\cr
+
+[5] Liu, Yufeng, et al. "Statistical significance of clustering for high-dimension, low?Csample size data." Journal of the American Statistical Association (2012).\cr
+
+[6] Rousseeuw, Peter J. "Silhouettes: a graphical aid to the interpretation and validation of cluster analysis." Journal of computational and applied mathematics 20 (1987): 53-65.
+
+
