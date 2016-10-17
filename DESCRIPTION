@@ -2,7 +2,7 @@ Package: CancerSubtypes
 Type: Package
 Title: Cancer subtypes identification, validation and visualization
         based on genomic data
-Version: 0.99.10
+Version: 1.0.0
 Date: 2016-06-30
 Author: Taosheng Xu<taosheng.x@gmail.com>, Thuc
         Le<Thuc.Le@unisa.edu.au>
