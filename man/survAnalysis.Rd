@@ -29,7 +29,6 @@ Survival analysis is a very common tool to explain and validate the cancer subty
 graphical display for the verification of the survival patterns between the identified cancer subtypes.
 }
 \examples{
-### SNF result analysis
 data(GeneExp)
 data(miRNAExp)
 data(time)
@@ -37,13 +36,38 @@ data(status)
 data1=FSbyCox(GeneExp,time,status,cutoff=0.05)
 data2=FSbyCox(miRNAExp,time,status,cutoff=0.05)
 GBM=list(GeneExp=data1,miRNAExp=data2)
-result=ExecuteSNF(GBM, clusterNum=3, K=20, alpha=0.5, t=20)
-group=result$group
-distanceMatrix=result$distanceMatrix
-p_value=survAnalysis(mainTitle="GBM",time,status,group,
-                     distanceMatrix=distanceMatrix,similarity=TRUE)
+
+### SNF result analysis
+result1=ExecuteSNF(GBM, clusterNum=3, K=20, alpha=0.5, t=20)
+group1=result1$group
+distanceMatrix1=result1$distanceMatrix
+p_value1=survAnalysis(mainTitle="GBM_SNF",time,status,group1,
+                     distanceMatrix=distanceMatrix1,similarity=TRUE)
+                     
+### WSNF result analysis
+data(Ranking)
+####Retrieve there feature ranking for genes
+gene_Name=rownames(data1)
+index1=match(gene_Name,Ranking$mRNA_TF_miRNA.v21._SYMBOL)
+gene_ranking=data.frame(gene_Name,Ranking[index1,],stringsAsFactors=FALSE)
+index2=which(is.na(gene_ranking$ranking_default))
+gene_ranking$ranking_default[index2]=min(gene_ranking$ranking_default,na.rm =TRUE)
+####Retrieve there feature ranking for genes
+miRNA_ID=rownames(data2)
+index3=match(miRNA_ID,Ranking$mRNA_TF_miRNA_ID)
+miRNA_ranking=data.frame(miRNA_ID,Ranking[index3,],stringsAsFactors=FALSE)
+index4=which(is.na(miRNA_ranking$ranking_default))
+miRNA_ranking$ranking_default[index4]=min(miRNA_ranking$ranking_default,na.rm =TRUE)
+###Clustering
+ranking1=list(gene_ranking$ranking_default ,miRNA_ranking$ranking_default)
+result2=ExecuteWSNF(datasets=GBM, feature_ranking=ranking1, beta = 0.8, clusterNum=3, 
+                    K = 20,alpha = 0.5, t = 20, plot = TRUE)
+group2=result2$group
+distanceMatrix2=result2$distanceMatrix
+p_value2=survAnalysis(mainTitle="GBM_WSNF",time,status,group2,
+                     distanceMatrix=distanceMatrix2,similarity=TRUE)
+
 }
 \author{
 Xu,Taosheng \email{taosheng.x@gmail.com},Thuc Le \email{Thuc.Le@unisa.edu.au}
 }
-

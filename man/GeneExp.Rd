@@ -19,4 +19,3 @@ and  100 cancer samples extracted from gene expression data for examples.
 data(GeneExp)
 }
 \keyword{datasets}
-

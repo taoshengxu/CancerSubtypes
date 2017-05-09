@@ -63,24 +63,31 @@ data.checkDistribution<-function(Data)
 data.normalization<-function(Data,type="feature_Median",log2=FALSE)
 {
   if(log2)
+  {
     data=log2(Data+1)
-  else
+  } else{
     data=Data
+    }
   
   if(type=="feature_Median")
   {
     result=sweep(data,1,apply(data,1,function(x) median(x, na.rm = TRUE)))
-  }
-  else if(type=="feature_Mean")
+  } else if(type=="feature_Mean")
   {
     result=sweep(data,1,apply(data,1,function(x) mean(x, na.rm = TRUE)))
-  }
-  else if(type=="feature_zsocre")
+  } else if(type=="feature_zscore")
   {
+    var_row=apply(data,1,var)
+    index=which(var_row<1e-10)
+    data=data[-index,]
+    cat("The features with the zero variance have been removed.")
     result=t(scale(t(data)))
-  }
-  else if(type=="sample_zsocre")
+  } else if(type=="sample_zscore")
   {
+    var_col=apply(data,2,var)
+    index=which(var_col<1e-10)
+    data=data[,-index]
+    cat("The samples with the zero variance have been removed.")
     result=scale(data)
   }
   result
@@ -123,8 +130,7 @@ data.imputation<-function(Data,fun="median")
       x
     })
     result=t(result)
-  }
-  else if(fun=="mean")
+  } else if(fun=="mean")
   {
     result=apply(Data,1,function(x){
       x<-as.numeric(x)
@@ -132,8 +138,7 @@ data.imputation<-function(Data,fun="median")
       x
     })
     result=t(result)
-  }
-  else if(fun=="microarray")
+  } else if(fun=="microarray")
   {
     result=impute.knn(Data)$data
   }

@@ -1,21 +1,15 @@
 Package: CancerSubtypes
 Type: Package
-Title: Cancer subtypes identification, validation and visualization
-        based on genomic data
-Version: 1.3.0
+Title: Cancer subtypes identification, validation and visualization based on multiple genomic data sets
+Version: 1.3.1
 Date: 2016-06-30
-Author: Taosheng Xu<taosheng.x@gmail.com>, Thuc
-        Le<Thuc.Le@unisa.edu.au>
+Author: Taosheng Xu<taosheng.x@gmail.com>, Thuc Le<Thuc.Le@unisa.edu.au>
 Maintainer: Taosheng Xu<taosheng.x@gmail.com>
-Depends: R (>= 3.3), sigclust, NMF
-Imports: SNFtool, iCluster, survival, cluster, impute, limma,
-        ConsensusClusterPlus, grDevices
-Description: CancerSubtypes integrates the current common computational
-        biology methods for cancer subtypes identification and provides
-        a standardized framework for cancer subtype analysis based on
-        the genomic datasets.
+Depends: R (>= 3.4), sigclust, NMF
+Imports: SNFtool, iCluster, cluster, impute, limma, ConsensusClusterPlus, grDevices, survival
+Description: CancerSubtypes integrates the current common computational biology methods for cancer subtypes identification and provides a standardized framework for cancer subtype analysis based multi-omics data, such as gene expression, miRNA expression, DNA methylation and others.
 License: GPL (>= 2)
 Suggests: BiocGenerics, knitr, RTCGA.mRNA, RTCGA.clinical
 VignetteBuilder: knitr
 biocViews: Clustering, Software, Visualization, GeneExpression
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

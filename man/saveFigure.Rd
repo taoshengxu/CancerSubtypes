@@ -40,4 +40,3 @@ saveFigure(foldername="GBM",filename="GBM",image_width=10,image_height=10,image_
 \author{
 Xu,Taosheng \email{taosheng.x@gmail.com},Thuc Le \email{Thuc.Le@unisa.edu.au}
 }
-

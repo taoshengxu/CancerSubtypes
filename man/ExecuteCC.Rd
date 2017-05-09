@@ -95,4 +95,3 @@ Monti, S., Tamayo, P., Mesirov, J., Golub, T. (2003) Consensus Clustering: A Res
 \seealso{
 \code{ConsensusClusterPlus}
 }
-

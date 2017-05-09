@@ -34,4 +34,3 @@ data1=FSbyMAD(GeneExp, cut.type="topk",value=1000)
 \author{
 Xu,Taosheng \email{taosheng.x@gmail.com}, Thuc Le \email{Thuc.Le@unisa.edu.au}
 }
-

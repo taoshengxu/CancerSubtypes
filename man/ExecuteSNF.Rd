@@ -57,4 +57,3 @@ B Wang, A Mezlini, F Demir, M Fiume, T Zu, M Brudno, B Haibe-Kains, A Goldenberg
 \seealso{
 \code{\link{affinityMatrix}} \code{\link{SNF}}
 }
-

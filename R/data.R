@@ -66,3 +66,24 @@ NULL
 #'@examples
 #' data(status)
 NULL
+
+#' Dataset: A default ranking of features for the fuction ExecuteWSNF()
+#' 
+#' A dataframe represents the regulatory ranking for features(mRNA,TF,miRNA) caculated based on the miRNA-TF-miRNA regulatory network which was promoted in our published work: 
+#' Identifying Cancer Subtypes from miRNA-TF-mRNA Regulatory Networks and Expression Data(PLos One,2016).
+#'
+#'\itemize{
+#'  \item  mRNA_TF_miRNA_ID : ENTREZID for genes(mRNA,TF)  and miRBase Accession ID for miRNAs.
+#'  \item  mRNA_TF_miRNA.v21._SYMBOL: gene symbol and miRNA names(miRBase Version 21)
+#'  \item  feature_ranking:  the numeric values represents regulatory ranking for each feature.
+#'}
+#'
+#'@docType data
+#'@keywords datasets
+#'@format dataframe
+#'@name Ranking
+#'@references 
+#' Xu, T., Le, T. D., Liu, L., Wang, R., Sun, B., & Li, J. (2016). Identifying cancer subtypes from mirna-tf-mrna regulatory networks and expression data. PloS one, 11(4), e0152792.
+#'@examples
+#' data(Ranking)
+NULL

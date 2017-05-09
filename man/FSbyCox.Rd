@@ -36,11 +36,10 @@ data(time)
 data(status)
 data1=FSbyCox(GeneExp,time,status,cutoff=0.05)
 }
-\author{
-Xu,Taosheng \email{taosheng.x@gmail.com}, Thuc Le \email{Thuc.Le@unisa.edu.au}
-}
 \references{
 Andersen, P. and Gill, R. (1982). Cox's regression model for counting processes, a large sample study. Annals of Statistics 10, 1100-1120.\cr
 Therneau, T., Grambsch, P., Modeling Survival Data: Extending the Cox Model. Springer-Verlag, 2000.
 }
-
+\author{
+Xu,Taosheng \email{taosheng.x@gmail.com}, Thuc Le \email{Thuc.Le@unisa.edu.au}
+}

@@ -101,3 +101,26 @@ spectralAlg <- function (affinity, K, type = 3)
   Y[cbind(1:nrow(eigenVector),j)] = 1
   return(Y)
 }
+
+.distanceWeighted2<-function(X,weight)  ##X is the expression Matrix(Row is sample, column is feature) 
+{
+  if(length(weight)==ncol(X))
+  {
+    X_row = nrow(X)      
+    weight_diag<-diag(weight)
+    X2<-(X^2)%*%weight_diag 
+    sumsqX = rowSums(X2)
+    X1<-X%*%weight_diag
+    XY = X1 %*% t(X)
+    XX=matrix(rep(sumsqX, times = X_row), X_row, X_row)
+    res=XX+t(XX)-2*XY
+    res[res < 0] = 0
+    diag(res)=0
+    #res<-sqrt(res)
+    return(res)
+  }
+  else
+  {
+    stop("The number of weights is not equal to the number of features in the data matix")
+  }
+}

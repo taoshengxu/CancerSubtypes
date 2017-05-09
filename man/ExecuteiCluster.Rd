@@ -63,4 +63,3 @@ Ronglai Shen, Qianxing Mo, Nikolaus Schultz, Venkatraman E. Seshan, Adam B. Olsh
 \seealso{
 \code{\link{iCluster2}}
 }
-

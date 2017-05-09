@@ -85,7 +85,6 @@ ExecuteCC<-function(clusterNum,
   }
   else
    temp=d
-  
   originalResult=ConsensusClusterPlus(
       temp, maxK=maxK,clusterAlg=clusterAlg,
       distance=distance,title=title,
@@ -93,12 +92,9 @@ ExecuteCC<-function(clusterNum,
       innerLinkage=innerLinkage, finalLinkage=finalLinkage,
       writeTable=writeTable,weightsItem=weightsItem,weightsFeature=weightsFeature,
       verbose=verbose,corUse=corUse)
-  
   group=originalResult[[clusterNum]][["consensusClass"]]
-  
   distanceMatrix=originalResult[[clusterNum]][["consensusMatrix"]]
   attr(distanceMatrix,'class')="Similarity"
-    
   #icl=calcICL(result,title =fileName,plot="png" )
   result=list(group=group,distanceMatrix=distanceMatrix,originalResult=originalResult)
   result
@@ -247,15 +243,16 @@ ExecuteSNF<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,plot=TRUE)
 #' fusion patients similarity matrix as the sample distance for Consensus Clustering.
 #'
 #' @importFrom SNFtool dist2 affinityMatrix SNF 
-#' @param datasets Same as ExecuteSNF
-#' @param clusterNum Same as ExecuteSNF
-#' @param K Same as ExecuteSNF
-#' @param alpha Same as ExecuteSNF
-#' @param t Same as ExecuteSNF
-#' @param maxK Same as ExecuteCC
+#' @param datasets A list containing data matrices. For each data matrix, 
+#' the rows represent genomic features, and the columns represent samples. Same as ExecuteSNF
+#' @param clusterNum A integer representing the return cluster number. Same as ExecuteSNF
+#' @param K Number of nearest neighbors. Same as ExecuteSNF
+#' @param alpha Variance for local model. Same as ExecuteSNF
+#' @param t Number of iterations for the diffusion process. Same as ExecuteSNF
+#' @param maxK integer value. maximum cluster number for Consensus Clustering Algorithm to evaluate. Same as ExecuteCC.
 #' @param pItem Same as ExecuteCC
-#' @param reps Same as ExecuteCC
-#' @param title Same as ExecuteCC
+#' @param reps integer value. number of subsamples(in other words, The iteration number of each cluster number). Same as ExecuteCC
+#' @param title character value for output directory. This title can be an absolute or relative path. Same as ExecuteCC
 #' @param plot Same as ExecuteCC
 #' @param finalLinkage Same as ExecuteCC
 #' 
@@ -304,6 +301,118 @@ ExecuteSNF.CC<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,
                    finalLinkage=finalLinkage)
   result
 }
+
+
+#' Execute the WSNF(Weighted Similarity Network Fusion)
+#'
+#' WSNF is a caner subtype identificaton method with the assistance of the gene regulatory network information. The basic idea of the WSNF is
+#' to set the different regulatory importance(ranking) for each feature. In the WSNF manuscript, WSNF makes use of the miRNA-TF-mRNA regulatory 
+#' network to take the importance of the features into consideration.
+#' 
+#' @importFrom SNFtool dist2 affinityMatrix SNF 
+#' @param datasets A list containing data matrices. For each data matrix, the rows represent genomic features, and the columns represent samples.
+#' @param feature_ranking A list containing numeric vetors. The length of the feature_ranking list should equal to the length of datasets list.
+#' For each numeric vetor represents the ranking of each feature in the corresponding data matrix. The order of the ranking should also mathch 
+#' the order of the features in the corresponding data matrix.  
+#' We proive a ranking list for most mRNA, TF(transcription factor) and miRNA features. The ranking for features caculated based on the miRNA-TF-miRNA 
+#' regulatory network which was promoted in our published work: Identifying Cancer Subtypes from miRNA-TF-mRNA Regulatory Networks and 
+#' Expression Data(PLos One,2016).
+#' @param beta A tuning parameter for the feature_ranking contributes the weight of each feature. \cr
+#' A linear model is applied to integrate feature_ranking and MAD(median absolute deviation) to generated the final weight for each feature using 
+#' for the algorithm. The final weight is cauculated as the formula below:\cr
+#' Weight(f_i)=beta * feature_ranking + (1-beta) MAD(f_i)
+#' @param clusterNum A integer representing the return cluster number
+#' @param K Number of nearest neighbors
+#' @param alpha Variance for local model
+#' @param t Number of iterations for the diffusion process
+#' @param plot Logical value. If true, draw the heatmap for the distance matrix with samples ordered to form clusters.
+#' 
+#' @return A list with the following elements.
+#'\itemize{
+#'  \item group
+#'  
+#'   A vector represent the group of cancer subtypes. The order is corresponding to the samples in the data matrix.
+#'  \item distanceMatrix
+#'  
+#'   It is a sample dissimilarity matrix. The more large value between samples in the matrix, the more dissimilarity the samples are.
+#'  \item originalResult
+#'  
+#'  The clustering result of the original function "ConsensusClusterPlus()"
+#'  }
+#'  
+#' @seealso \code{\link{ExecuteSNF}}
+#' @references 
+#' Xu, T., Le, T. D., Liu, L., Wang, R., Sun, B., & Li, J. (2016). Identifying cancer subtypes from mirna-tf-mrna regulatory networks and expression data. PloS one, 11(4), e0152792.
+#' @examples
+#' data(GeneExp)
+#' data(miRNAExp)
+#' GBM=list(GeneExp,miRNAExp)
+#' ###1. Use the defualt ranking in the package.
+#' data(Ranking)
+#' ####Retrieve there feature ranking for genes
+#' gene_Name=rownames(GeneExp)
+#' index1=match(gene_Name,Ranking$mRNA_TF_miRNA.v21._SYMBOL)
+#' gene_ranking=data.frame(gene_Name,Ranking[index1,],stringsAsFactors=FALSE)
+#' index2=which(is.na(gene_ranking$ranking_default))
+#' gene_ranking$ranking_default[index2]=min(gene_ranking$ranking_default,na.rm =TRUE)
+#' 
+#' ####Retrieve there feature ranking for genes
+#' miRNA_ID=rownames(miRNAExp)
+#' index3=match(miRNA_ID,Ranking$mRNA_TF_miRNA_ID)
+#' miRNA_ranking=data.frame(miRNA_ID,Ranking[index3,],stringsAsFactors=FALSE)
+#' index4=which(is.na(miRNA_ranking$ranking_default))
+#' miRNA_ranking$ranking_default[index4]=min(miRNA_ranking$ranking_default,na.rm =TRUE)
+#' ###Clustering
+#' ranking1=list(gene_ranking$ranking_default ,miRNA_ranking$ranking_default)
+#' result1=ExecuteWSNF(datasets=GBM, feature_ranking=ranking1, beta = 0.8, clusterNum=3, 
+#'                    K = 20,alpha = 0.5, t = 20, plot = TRUE)
+#' 
+#' ###2. User input ranking
+#' # Fabricate a ranking list for demonstrating the examples.
+#' ranking2=list(runif(nrow(GeneExp), min=0, max=1),runif(nrow(miRNAExp), min=0, max=1))
+#' result2=ExecuteWSNF(datasets=GBM, feature_ranking=ranking2, beta = 0.8, clusterNum=3, 
+#'                    K = 20,alpha = 0.5, t = 20, plot = TRUE)
+#' 
+#' @export
+#'
+ExecuteWSNF<-function(datasets,feature_ranking,beta=0.8,clusterNum,K=20, alpha=0.5, t=20,plot=TRUE)
+{
+  if(is.list(feature_ranking))
+  {
+    if(length(feature_ranking)==length(datasets))
+    {
+      W_temp=list()
+      for(i in 1:length(datasets))
+      {
+        mads=apply(datasets[[i]],1,mad)
+        mads=mads/sum(mads)
+        feature_ranking1=as.numeric(feature_ranking[[i]])
+        feature_ranking1=feature_ranking1/sum(feature_ranking1)
+        weight=feature_ranking1*beta+(1-beta)*mads
+        distance=.distanceWeighted2(as.matrix(t(datasets[[i]])),weight)
+        W_temp[[i]] = affinityMatrix(distance, K, alpha)
+      }
+      W = SNFtool::SNF(W_temp, K=K, t=t)
+      group =spectralClustering(W,clusterNum)
+      
+      diag(W)=0
+      diag(W)=max(W)
+      distanceMatrix=W
+      attr(distanceMatrix,'class')="Similarity"
+      
+      if(plot)
+        displayClusters(W, group)
+      result=list(group=group,distanceMatrix=distanceMatrix)
+    }
+    else
+    {
+      stop("The length of feature_ranking(list) is not equal to lengh of datasets(list)")
+    }
+  }
+result
+}
+
+
 
 #' Execute Consensus NMF (Nonnegative matrix factorization)
 #'

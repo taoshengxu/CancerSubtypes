@@ -9,10 +9,9 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
-
 # 1. Introduction
 
-*CancerSubtypes* is a  package for cancer subtype analysis that includes various functions from dataset processing to result validation. In *CancerSubtypes* package, we provide a unified framework for analysing cancer subtpes from raw data to result visualisation. The main functions include genomic data pre-processing, cancer subtypes identification, results validation, visualization and comparison. *CancerSubtypes* provides the common data imputation and normalization methods for the genomic data pre-processing. Meanwhile, there are four feature selection methods to screen the key features in genomic dataset. The common cancer subtypes identification methods are integrated in this package such as **Consensus clustering (CC)** [From R package *ConsensusClusterPlus*], **Consensus Nonnegative matrix factorization (CNMF)** [From R package *NMF*],  **Integrative clustering (iCluster)**[From R package *iCluster*],  **Similarity Network Fusion (SNF)**   [From R package *SNFtool*] and  **Combined SNF and CC (SNF.CC)**. We implement these cancer subtypes identification methods in a unified input and output data format. The process of analysing cancer subtypes can be easily conducted in a standard workflow. *CancerSubtypes* provides the most useful feature selection methods and subtypes validation method and helps users to focus on their cancer genomic data and the results from different methods can be compared and evaluation in visualization way easily.
+*CancerSubtypes* is a  package for cancer subtype analysis that includes various functions from dataset processing to result validation. In *CancerSubtypes* package, we provide a unified framework for analysing cancer subtpes from raw data to result visualisation. The main functions include genomic data pre-processing, cancer subtypes identification, results validation, visualization and comparison. *CancerSubtypes* provides the common data imputation and normalization methods for the genomic data pre-processing. Meanwhile, there are four feature selection methods to screen the key features in genomic dataset. The common cancer subtypes identification methods are integrated in this package such as **Consensus clustering (CC)** [From R package *ConsensusClusterPlus*], **Consensus Nonnegative matrix factorization (CNMF)** [From R package *NMF*],  **Integrative clustering (iCluster)**[From R package *iCluster*],  **Similarity Network Fusion (SNF)**   [From R package *SNFtool*],  **Combined SNF and CC (SNF.CC)** and **Weighted Similarity Network Fusion (WSNF)**. We implement these cancer subtypes identification methods in a unified input and output data format. The process of analysing cancer subtypes can be easily conducted in a standard workflow. *CancerSubtypes* provides the most useful feature selection methods and subtypes validation method and helps users to focus on their cancer genomic data and the results from different methods can be compared and evaluation in visualization way easily.
 
 
 ---
@@ -23,7 +22,7 @@ For the basic data processing, *CancerSubtypes* provides the methods for data di
 ### 2.1 Basic processing
 
 #### 2.1.1 Analysis the raw data by check the data distribution.
-```{r message = FALSE}
+```{r message = FALSE,warning=FALSE}
 ### Prepare a TCGA gene expression dataset for analysis. 
 library(CancerSubtypes)
 library("RTCGA.mRNA")
@@ -47,7 +46,7 @@ res3=data.imputation(mRNA,fun="microarray")
 #### 2.1.3 Data normalization.
 ```{r}
 result1=data.normalization(mRNA,type="feature_Median",log2=FALSE)
-result2=data.normalization(mRNA,type="feature_zsocre",log2=FALSE)
+result2=data.normalization(mRNA,type="feature_zscore",log2=FALSE)
 ```
 
 ### 2.2 Feature selection
@@ -158,6 +157,32 @@ result=ExecuteSNF.CC(GBM, clusterNum=3, K=20, alpha=0.5, t=20,maxK = 10, pItem =
                      title = "GBM", plot = "png", finalLinkage ="average")
 ```
 
+### 3.6 Weighted Similarity network fusion for cancer subtype identification
+WSNF is a caner subtype identificaton method with the assistance of the gene regulatory network information. It makes use of the miRNA-TF-mRNA regulatory network to take the importance of the features into consideration.
+```{r eval = FALSE}
+data(GeneExp)
+data(miRNAExp)
+data(Ranking)
+####Retrieve there feature ranking for genes
+gene_Name=rownames(GeneExp)
+index1=match(gene_Name,Ranking$mRNA_TF_miRNA.v21._SYMBOL)
+gene_ranking=data.frame(gene_Name,Ranking[index1,],stringsAsFactors=FALSE)
+index2=which(is.na(gene_ranking$ranking_default))
+gene_ranking$ranking_default[index2]=min(gene_ranking$ranking_default,na.rm =TRUE)
+
+####Retrieve there feature ranking for genes
+miRNA_ID=rownames(miRNAExp)
+index3=match(miRNA_ID,Ranking$mRNA_TF_miRNA_ID)
+miRNA_ranking=data.frame(miRNA_ID,Ranking[index3,],stringsAsFactors=FALSE)
+index4=which(is.na(miRNA_ranking$ranking_default))
+miRNA_ranking$ranking_default[index4]=min(miRNA_ranking$ranking_default,na.rm =TRUE)
+###Clustering
+ranking1=list(gene_ranking$ranking_default ,miRNA_ranking$ranking_default)
+GBM=list(GeneExp,miRNAExp)
+result=ExecuteWSNF(datasets=GBM, feature_ranking=ranking1, beta = 0.8, clusterNum=3, 
+                   K = 20,alpha = 0.5, t = 20, plot = TRUE)
+```
+
 ---
   
 # 4 Results validation, interpretation and visualization for the identified cancer subtypes.
@@ -251,6 +276,7 @@ Differential expression analysis is to test the expression difference between ea
 
 ```{r results="hide",message=FALSE,fig.show="hide"}
 library("RTCGA.mRNA")
+#require(TCGAbiolinks)
 rm(list = ls())
 data(BRCA.mRNA)
 mRNA=t(as.matrix(BRCA.mRNA[,-1]))
@@ -298,5 +324,7 @@ The *CancerSubtypes* R package provides a suite of cancer subtypes analysis tool
 [5] Liu, Yufeng, et al. "Statistical significance of clustering for high-dimension, low?Csample size data." Journal of the American Statistical Association (2012).\cr
 
 [6] Rousseeuw, Peter J. "Silhouettes: a graphical aid to the interpretation and validation of cluster analysis." Journal of computational and applied mathematics 20 (1987): 53-65.
+
+[7] Xu T, Le T D, Liu L, et al. Identifying cancer subtypes from mirna-tf-mrna regulatory networks and expression data[J]. PloS one, 2016, 11(4): e0152792.
 
 

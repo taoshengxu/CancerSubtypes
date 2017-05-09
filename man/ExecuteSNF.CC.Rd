@@ -9,23 +9,24 @@ ExecuteSNF.CC(datasets, clusterNum, K = 20, alpha = 0.5, t = 20,
   plot = "png", finalLinkage = "average")
 }
 \arguments{
-\item{datasets}{Same as ExecuteSNF}
+\item{datasets}{A list containing data matrices. For each data matrix, 
+the rows represent genomic features, and the columns represent samples. Same as ExecuteSNF}
 
-\item{clusterNum}{Same as ExecuteSNF}
+\item{clusterNum}{A integer representing the return cluster number. Same as ExecuteSNF}
 
-\item{K}{Same as ExecuteSNF}
+\item{K}{Number of nearest neighbors. Same as ExecuteSNF}
 
-\item{alpha}{Same as ExecuteSNF}
+\item{alpha}{Variance for local model. Same as ExecuteSNF}
 
-\item{t}{Same as ExecuteSNF}
+\item{t}{Number of iterations for the diffusion process. Same as ExecuteSNF}
 
-\item{maxK}{Same as ExecuteCC}
+\item{maxK}{integer value. maximum cluster number for Consensus Clustering Algorithm to evaluate. Same as ExecuteCC.}
 
 \item{pItem}{Same as ExecuteCC}
 
-\item{reps}{Same as ExecuteCC}
+\item{reps}{integer value. number of subsamples(in other words, The iteration number of each cluster number). Same as ExecuteCC}
 
-\item{title}{Same as ExecuteCC}
+\item{title}{character value for output directory. This title can be an absolute or relative path. Same as ExecuteCC}
 
 \item{plot}{Same as ExecuteCC}
 
@@ -64,4 +65,3 @@ result$group
 \seealso{
 \code{\link{ExecuteSNF}} \code{\link{ExecuteCC}}
 }
-

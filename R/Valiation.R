@@ -103,7 +103,6 @@ silhouette_SimilarityMatrix<-function(group, similarity_matrix)
 #' @author
 #'  Xu,Taosheng \email{taosheng.x@@gmail.com},Thuc Le \email{Thuc.Le@@unisa.edu.au}
 #'@examples
-#'### SNF result analysis
 #' data(GeneExp)
 #' data(miRNAExp)
 #' data(time)
@@ -111,11 +110,37 @@ silhouette_SimilarityMatrix<-function(group, similarity_matrix)
 #' data1=FSbyCox(GeneExp,time,status,cutoff=0.05)
 #' data2=FSbyCox(miRNAExp,time,status,cutoff=0.05)
 #' GBM=list(GeneExp=data1,miRNAExp=data2)
-#' result=ExecuteSNF(GBM, clusterNum=3, K=20, alpha=0.5, t=20)
-#' group=result$group
-#' distanceMatrix=result$distanceMatrix
-#' p_value=survAnalysis(mainTitle="GBM",time,status,group,
-#'                      distanceMatrix=distanceMatrix,similarity=TRUE)
+#' 
+#' ### SNF result analysis
+#' result1=ExecuteSNF(GBM, clusterNum=3, K=20, alpha=0.5, t=20)
+#' group1=result1$group
+#' distanceMatrix1=result1$distanceMatrix
+#' p_value1=survAnalysis(mainTitle="GBM_SNF",time,status,group1,
+#'                      distanceMatrix=distanceMatrix1,similarity=TRUE)
+#'                      
+#' ### WSNF result analysis
+#' data(Ranking)
+#' ####Retrieve there feature ranking for genes
+#' gene_Name=rownames(data1)
+#' index1=match(gene_Name,Ranking$mRNA_TF_miRNA.v21._SYMBOL)
+#' gene_ranking=data.frame(gene_Name,Ranking[index1,],stringsAsFactors=FALSE)
+#' index2=which(is.na(gene_ranking$ranking_default))
+#' gene_ranking$ranking_default[index2]=min(gene_ranking$ranking_default,na.rm =TRUE)
+#' ####Retrieve there feature ranking for genes
+#' miRNA_ID=rownames(data2)
+#' index3=match(miRNA_ID,Ranking$mRNA_TF_miRNA_ID)
+#' miRNA_ranking=data.frame(miRNA_ID,Ranking[index3,],stringsAsFactors=FALSE)
+#' index4=which(is.na(miRNA_ranking$ranking_default))
+#' miRNA_ranking$ranking_default[index4]=min(miRNA_ranking$ranking_default,na.rm =TRUE)
+#' ###Clustering
+#' ranking1=list(gene_ranking$ranking_default ,miRNA_ranking$ranking_default)
+#' result2=ExecuteWSNF(datasets=GBM, feature_ranking=ranking1, beta = 0.8, clusterNum=3, 
+#'                     K = 20,alpha = 0.5, t = 20, plot = TRUE)
+#' group2=result2$group
+#' distanceMatrix2=result2$distanceMatrix
+#' p_value2=survAnalysis(mainTitle="GBM_WSNF",time,status,group2,
+#'                      distanceMatrix=distanceMatrix2,similarity=TRUE)
+#'
 #' @export
 #'
 survAnalysis<-function(mainTitle="Survival Analysis",time,status,group,distanceMatrix=NULL,similarity=TRUE)
@@ -177,7 +202,7 @@ survAnalysis<-function(mainTitle="Survival Analysis",time,status,group,distanceM
     names(Var1) = sort(unique(group))
     ann_colors =  list(group=Var1)
     
-    consensusmap(distanceMatrix,Rowv=ind,Colv=ind,main = "Clustering dispaly",
+    consensusmap(distanceMatrix,Rowv=ind,Colv=ind,main = "Clustering display",
                  annCol = annotation,annColors=ann_colors,
                  labRow ="Sample", labCol = "Sample",scale="none")
     
@@ -427,6 +452,8 @@ sigclustTest<-function(Data,group, nsim=1000, nrep=1, icovest=1)
 #' For the matrix, the rows represent the genomic features corresponding to the Tumor_Data, and the columns represent the normal samples.
 #' @param group A vector representing the subtype of each tumor sample in the Tumor_Data. The length of group is equal to the column number of Tumor_Data.  
 #' @param topk The top number of different expression features that we want to extract in the return result.
+#' @param sort.by This is a parmeter of "topTable() in limma pacakge". "Character string specifying statistic to rank genes by. Possible values for topTable and toptable are "logFC", "AveExpr", "t", "P", "p", "B" or "none". (Permitted synonyms are "M" for "logFC", "A" or "Amean" for "AveExpr", "T" for "t" and "p" for "P".) Possibilities for topTableF are "F" or "none". Possibilities for topTreat are as for topTable except for "B"."
+#' @param adjust.method This is a parmeter of "topTable() in limma pacakge".  Refer to the "method used to adjust the p-values for multiple testing. Options, in increasing conservatism, include "none", "BH", "BY" and "holm". See p.adjust for the complete list of options. A NULL value will result in the default adjustment method, which is "BH"."                              
 #' @param RNAseq A bool type representing the input datatype is a RNASeq or not. Default is FALSE for microarray data.
 #' @return 
 #' A list representing the differently expression for each subtype comparing to the Normal group.
@@ -448,7 +475,7 @@ sigclustTest<-function(Data,group, nsim=1000, nrep=1, icovest=1)
 #' Springer New York, 2005. 397-420.
 #' @export
 
-DiffExp.limma<-function(Tumor_Data,Normal_Data,group=NULL,topk=NULL,RNAseq=FALSE)
+DiffExp.limma<-function(Tumor_Data,Normal_Data,group=NULL,topk=NULL,sort.by="p", adjust.method="BH",RNAseq=FALSE)
 { 
   if(is.null(group))
     group=rep(1,ncol(Tumor_Data))
@@ -495,7 +522,7 @@ DiffExp.limma<-function(Tumor_Data,Normal_Data,group=NULL,topk=NULL,RNAseq=FALSE
     {
       topk=nrow(mR)
     }
-    mRresults=topTable(mRfit2, number= topk, sort.by="p", adjust.method="BH")
+    mRresults=topTable(mRfit2, number= topk, sort.by=sort.by, adjust.method=adjust.method)
     ######restore feature name
     mRresults[which(rownames(mRresults)=="1"),1]=name1
     mRresults[which(rownames(mRresults)=="2"),1]=name2

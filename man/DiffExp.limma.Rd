@@ -5,7 +5,7 @@
 \title{DiffExp.limma}
 \usage{
 DiffExp.limma(Tumor_Data, Normal_Data, group = NULL, topk = NULL,
-  RNAseq = FALSE)
+  sort.by = "p", adjust.method = "BH", RNAseq = FALSE)
 }
 \arguments{
 \item{Tumor_Data}{A matrix representing the genomic data of cancer samples such as gene expression data, miRNA expression data.\cr
@@ -17,6 +17,10 @@ For the matrix, the rows represent the genomic features corresponding to the Tum
 \item{group}{A vector representing the subtype of each tumor sample in the Tumor_Data. The length of group is equal to the column number of Tumor_Data.}
 
 \item{topk}{The top number of different expression features that we want to extract in the return result.}
+
+\item{sort.by}{This is a parmeter of "topTable() in limma pacakge". "Character string specifying statistic to rank genes by. Possible values for topTable and toptable are "logFC", "AveExpr", "t", "P", "p", "B" or "none". (Permitted synonyms are "M" for "logFC", "A" or "Amean" for "AveExpr", "T" for "t" and "p" for "P".) Possibilities for topTableF are "F" or "none". Possibilities for topTreat are as for topTable except for "B"."}
+
+\item{adjust.method}{This is a parmeter of "topTable() in limma pacakge".  Refer to the "method used to adjust the p-values for multiple testing. Options, in increasing conservatism, include "none", "BH", "BY" and "holm". See p.adjust for the complete list of options. A NULL value will result in the default adjustment method, which is "BH"."}
 
 \item{RNAseq}{A bool type representing the input datatype is a RNASeq or not. Default is FALSE for microarray data.}
 }
@@ -37,11 +41,10 @@ group=result$group
 Normal_Data=GeneExp[,sample(1:100,20)]
 result=DiffExp.limma(Tumor_Data=GeneExp,Normal_Data=Normal_Data,group=group,topk=NULL,RNAseq=FALSE)
 }
-\author{
-Xu,Taosheng \email{taosheng.x@gmail.com},Thuc Le \email{Thuc.Le@unisa.edu.au}
-}
 \references{
 Smyth, Gordon K. "Limma: linear models for microarray data." Bioinformatics and computational biology solutions using R and Bioconductor. 
 Springer New York, 2005. 397-420.
 }
-
+\author{
+Xu,Taosheng \email{taosheng.x@gmail.com},Thuc Le \email{Thuc.Le@unisa.edu.au}
+}
