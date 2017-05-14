@@ -31,15 +31,19 @@
 
 #' @return A list with the following elements.
 #'\itemize{
-#'  \item group 
+#'  \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
+#'   
+#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+#'   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
+#'   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
+#'   
+#'  \item \strong{distanceMatrix} : It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
+#'   
+#'   We extracted this matrix from the algorithmic procedure because it is useful for similarity analysis among the samples based on the clustering results.
+#'   
+#'  \item \strong{originalResult} : The clustering result of the original function "ConsensusClusterPlus()"
 #'  
-#'   A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.
-#'  \item distanceMatrix
-#'  
-#'   It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
-#'  \item originalResult
-#'  
-#'  The clustering result of the original function "ConsensusClusterPlus()"
+#'  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
 #'  }
 #'  
 #' @details 
@@ -125,12 +129,15 @@ ExecuteCC<-function(clusterNum,
 
 #' @return A list with the following elements.
 #'\itemize{
-#'  \item group  
+#'   \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
+#'   
+#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+#'   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
+#'   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
+#'   
+#'  \item \strong{originalResult} : The clustering result of the original function "iCluster2()".
 #'  
-#'  A vector represent the group of cancer subtypes. The order is corresponding to the samples in the data matrix.
-#'  \item originalResult
-#'  
-#'  The clustering result of the original function "iCluster2()"
+#'  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
 #'  }
 #'  
 #'  
@@ -193,12 +200,19 @@ ExecuteiCluster<-function(datasets, k, lambda=NULL, scale=TRUE, scalar=FALSE, ma
 #' @param plot Logical value. If true, draw the heatmap for the distance matrix with samples ordered to form clusters.
 #' @return A list with the following elements.
 #'\itemize{
-#'  \item group
+#'  \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
+#'   
+#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+#'   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
+#'   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
+#'   
+#'  \item \strong{distanceMatrix} : It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
+#'   
+#'   We extracted this matrix from the algorithmic procedure because it is useful for similarity analysis among the samples based on the clustering results.
+#'   
+#'  \item \strong{originalResult} : The clustering result of the original SNF algorithm"
 #'  
-#'      A vector represents the group of cancer subtypes. The order is corresponding to the samples in the data matrix.
-#'  \item distanceMatrix  
-#'  
-#'  It is a samplesimilarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
+#'  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
 #'  }
 #' @references
 #' B Wang, A Mezlini, F Demir, M Fiume, T Zu, M Brudno, B Haibe-Kains, A Goldenberg (2014) Similarity Network Fusion: a fast and effective method to aggregate multiple data types on a genome wide scale. Nature Methods. Online. Jan 26, 2014
@@ -231,7 +245,7 @@ ExecuteSNF<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,plot=TRUE)
   
   if(plot)
     displayClusters(W, group)
-  result=list(group=group,distanceMatrix=distanceMatrix)
+  result=list(group=group,distanceMatrix=distanceMatrix,originalResult=group)
   result
 }
 
@@ -258,15 +272,19 @@ ExecuteSNF<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,plot=TRUE)
 #' 
 #' @return Same as the ExecuteCC(). A list with the following elements.
 #'\itemize{
-#'  \item group
+#'  \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
+#'   
+#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+#'   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
+#'   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
+#'   
+#'  \item \strong{distanceMatrix} : It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
+#'   
+#'   We extracted this matrix from the algorithmic procedure because it is useful for similarity analysis among the samples based on the clustering results.
+#'   
+#'  \item \strong{originalResult} : The clustering result of the original function "ConsensusClusterPlus()"
 #'  
-#'   A vector represent the group of cancer subtypes. The order is corresponding to the samples in the data matrix.
-#'  \item distanceMatrix
-#'  
-#'   It is a sample dissimilarity matrix. The more large value between samples in the matrix, the more dissimilarity the samples are.
-#'  \item originalResult
-#'  
-#'  The clustering result of the original function "ConsensusClusterPlus()"
+#'  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
 #'  }
 #'  
 #' @seealso \code{\link{ExecuteSNF}} \code{\link{ExecuteCC}}
@@ -309,7 +327,7 @@ ExecuteSNF.CC<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,
 #' to set the different regulatory importance(ranking) for each feature. In the WSNF manuscript, WSNF makes use of the miRNA-TF-mRNA regulatory 
 #' network to take the importance of the features into consideration.
 #' 
-#' @importFrom SNFtool dist2 affinityMatrix SNF 
+#' @importFrom SNFtool affinityMatrix SNF 
 #' @param datasets A list containing data matrices. For each data matrix, the rows represent genomic features, and the columns represent samples.
 #' @param feature_ranking A list containing numeric vetors. The length of the feature_ranking list should equal to the length of datasets list.
 #' For each numeric vetor represents the ranking of each feature in the corresponding data matrix. The order of the ranking should also mathch 
@@ -329,15 +347,19 @@ ExecuteSNF.CC<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,
 #' 
 #' @return A list with the following elements.
 #'\itemize{
-#'  \item group
+#'  \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
+#'   
+#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+#'   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
+#'   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
+#'   
+#'  \item \strong{distanceMatrix} : It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
+#'   
+#'   We extracted this matrix from the algorithmic procedure because it is useful for similarity analysis among the samples based on the clustering results.
+#'   
+#'  \item \strong{originalResult} : The clustering result of the original SNF algorithm.
 #'  
-#'   A vector represent the group of cancer subtypes. The order is corresponding to the samples in the data matrix.
-#'  \item distanceMatrix
-#'  
-#'   It is a sample dissimilarity matrix. The more large value between samples in the matrix, the more dissimilarity the samples are.
-#'  \item originalResult
-#'  
-#'  The clustering result of the original function "ConsensusClusterPlus()"
+#'  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
 #'  }
 #'  
 #' @seealso \code{\link{ExecuteSNF}}
@@ -402,7 +424,7 @@ ExecuteWSNF<-function(datasets,feature_ranking,beta=0.8,clusterNum,K=20, alpha=0
       
       if(plot)
         displayClusters(W, group)
-      result=list(group=group,distanceMatrix=distanceMatrix)
+      result=list(group=group,distanceMatrix=distanceMatrix,originalResult=group)
     }
     else
     {
@@ -435,15 +457,19 @@ result
 #' @return 
 #' A list with the following elements.
 #'\itemize{
-#'  \item group  
+#'  \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
+#'   
+#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+#'   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
+#'   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
+#'   
+#'  \item \strong{distanceMatrix} : It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
+#'   
+#'   We extracted this matrix from the algorithmic procedure because it is useful for similarity analysis among the samples based on the clustering results.
+#'   
+#'  \item \strong{originalResult} : A NMFfitX class from the result of function "nmf()".
 #'  
-#'  A vector represent the group of cancer subtypes. The order is corresponding to the samples in the data matrix.
-#'  \item distanceMatrix
-#'  
-#'   It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
-#'  \item originalResult
-
-#'  A NMFfitX class from the result of function "nmf()".
+#'  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
 #'  }
 #'  
 #' @details

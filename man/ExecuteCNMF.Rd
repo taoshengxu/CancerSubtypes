@@ -19,14 +19,19 @@ get by concatenating matrix1 and -maxtrix2.}
 \value{
 A list with the following elements.
 \itemize{
- \item group  
+ \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
+  
+  This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+  is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
+  of group is also compatible with the K-means result and the hclust (after using the cutree() function).
+  
+ \item \strong{distanceMatrix} : It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
+  
+  We extracted this matrix from the algorithmic procedure because it is useful for similarity analysis among the samples based on the clustering results.
+  
+ \item \strong{originalResult} : A NMFfitX class from the result of function "nmf()".
  
- A vector represent the group of cancer subtypes. The order is corresponding to the samples in the data matrix.
- \item distanceMatrix
- 
-  It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
- \item originalResult
- A NMFfitX class from the result of function "nmf()".
+ Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
  }
 }
 \description{
