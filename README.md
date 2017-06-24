@@ -8,7 +8,7 @@
 [![bioc](http://bioconductor.org/shields/availability/devel/CancerSubtypes.svg)](http://bioconductor.org/packages/CancerSubtypes/)
 [![bioc](http://www.bioconductor.org/shields/build/release/bioc/CancerSubtypes.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/CancerSubtypes.html)
 
-This R package "CancerSubtypes" integrates the current common computational biology methods for cancer subtypes identification and provides a standardized framework for cancer subtype analysis based multi-omics data, such as gene expression, miRNA expression, DNA methylation and others.
+The R/Bioconductor package `CancerSubtypes` integrates the current common computational biology methods for cancer subtypes identification and provides a standardized framework for cancer subtype analysis based multi-omics data, such as gene expression, miRNA expression, DNA methylation and others.
 
 ------------------------------------------------------------------------
 
@@ -31,4 +31,6 @@ Tutorial and examples can be found  [here](https://bioconductor.org/packages/dev
 ## Citation
 Please cite the following article when using `CancerSubtypes`:
 
-Xu, T. et al. CancerSubtypes: an R/Bioconductor package for molecular cancer subtype identification, validation, and visualization. Bioinformatics [doi:10.1093/bioinformatics/btx378](https://doi.org/10.1093/bioinformatics/btx378).
+[![doi](https://img.shields.io/badge/doi-10.1093/bioinformatics/btx378-green.svg?style=flat)](https://doi.org/10.1093/bioinformatics/btx378) [![citation](https://img.shields.io/badge/cited%20by-0-green.svg?style=flat)](https://doi.org/10.1093/bioinformatics/btx378) [![Altmetric](https://img.shields.io/badge/Altmetric-2-green.svg?style=flat)](https://www.altmetric.com/details/21038105)
+
+Xu, T. et al. CancerSubtypes: an R/Bioconductor package for molecular cancer subtype identification, validation, and visualization. Bioinformatics (2017) [doi:10.1093/bioinformatics/btx378](https://doi.org/10.1093/bioinformatics/btx378).

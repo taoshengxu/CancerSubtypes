@@ -79,15 +79,21 @@ data.normalization<-function(Data,type="feature_Median",log2=FALSE)
   {
     var_row=apply(data,1,var)
     index=which(var_row<1e-10)
-    data=data[-index,]
-    cat("The features with the zero variance have been removed.")
+    if(length(index)>0)
+    {
+      data=data[-index,]
+      cat("The features with the zero variance have been removed.")
+    }
     result=t(scale(t(data)))
   } else if(type=="sample_zscore")
   {
     var_col=apply(data,2,var)
     index=which(var_col<1e-10)
-    data=data[,-index]
-    cat("The samples with the zero variance have been removed.")
+    if(length(index)>0)
+    {
+      data=data[-index,]
+      cat("The samples with the zero variance have been removed.")
+    }
     result=scale(data)
   }
   result
