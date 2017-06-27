@@ -1,0 +1,23 @@
+citHeader("To cite CancerSubytpes in publications use:")
+citEntry(entry = "Article",
+  title        = "CancerSubtypes: an R/Bioconductor package for molecular cancer subtype identification, validation, and visualization",
+  author       = personList(as.person("Taosheng Xu"),
+                   as.person("Thuc Duy Le"),
+                   as.person("Lin Liu"),
+                   as.person("Ning Su"),
+                   as.person("Rujing Wang"),
+                   as.person("Bingyu Sun"),
+                   as.person("Antonio Colaprico"),
+                   as.person("Gianluca Bontempi"),
+                   as.person("Jiuyong Li")),
+  journal      = "Bioinformatics",
+  year         = "2017",
+  volume       = "",
+  number       = "",
+  pages        = "",
+  url          = "https://doi.org/10.1093/bioinformatics/btx378",
+
+  textVersion  =
+  paste("Taosheng Xu, Thuc Duy Le, Lin Liu, Ning Su, Rujing Wang, Bingyu Sun, Antonio Colaprico, Gianluca Bontempi, and Jiuyong Li(2017). CancerSubtypes: An R/Bioconductor Package for Molecular Cancer Subtype Identification, Validation, and Visualization. Bioinformatics. doi:10.1093/bioinformatics/btx378.")
+)
+
