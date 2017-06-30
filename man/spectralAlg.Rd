@@ -28,4 +28,3 @@ W1 = SNFtool::affinityMatrix(Dist1, 20, 0.5)
 group=spectralAlg(W1,3, type = 3)
 
 }
-

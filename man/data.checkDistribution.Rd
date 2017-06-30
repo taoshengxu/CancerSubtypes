@@ -20,4 +20,3 @@ Data check distribution
 data(GeneExp)
 data.checkDistribution(GeneExp)
 }
-

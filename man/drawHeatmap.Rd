@@ -63,10 +63,9 @@ drawHeatmap(GeneExp,group,silhouette=silhouette,scale="max_min",Title="GBM Gene 
 drawHeatmap(GeneExp,group,silhouette=silhouette,scale="max_min",
             color="-RdYlBu",Title="GBM Gene Expression")
 }
-\author{
-Xu,Taosheng \email{taosheng.x@gmail.com},Thuc Le \email{Thuc.Le@unisa.edu.au}
-}
 \references{
 Gaujoux, Renaud, and Cathal Seoighe. "A flexible R package for nonnegative matrix factorization." BMC bioinformatics 11.1 (2010): 1.
 }
-
+\author{
+Xu,Taosheng \email{taosheng.x@gmail.com},Thuc Le \email{Thuc.Le@unisa.edu.au}
+}

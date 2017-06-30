@@ -46,4 +46,3 @@ p_value=survAnalysis(mainTitle="GBM",time,status,group,
 \author{
 Xu,Taosheng \email{taosheng.x@gmail.com},Thuc Le \email{Thuc.Le@unisa.edu.au}
 }
-

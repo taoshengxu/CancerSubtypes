@@ -41,13 +41,12 @@ sil1=silhouette(result$group, result$distanceMatrix)
 plot(sil1)  ##wrong result
 
 }
-\author{
-Xu,Taosheng \email{taosheng.x@gmail.com},Thuc Le \email{Thuc.Le@unisa.edu.au}
-}
 \references{
 Rousseeuw, P.J. (1987) Silhouettes: A graphical aid to the interpretation and validation of cluster analysis. J. Comput. Appl. Math., 20, 53-65.
 }
 \seealso{
 \code{\link{silhouette}}
 }
-
+\author{
+Xu,Taosheng \email{taosheng.x@gmail.com},Thuc Le \email{Thuc.Le@unisa.edu.au}
+}

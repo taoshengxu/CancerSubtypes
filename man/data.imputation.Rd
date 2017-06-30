@@ -35,4 +35,3 @@ index=sample(c(1:1000),60)
 Data[index]=NA
 result=data.imputation(Data,fun="median")
 }
-

@@ -37,11 +37,10 @@ group=result$group
 Normal_Data=GeneExp[,sample(1:100,20)]
 result=DiffExp.limma(Tumor_Data=GeneExp,Normal_Data=Normal_Data,group=group,topk=NULL,RNAseq=FALSE)
 }
-\author{
-Xu,Taosheng \email{taosheng.x@gmail.com},Thuc Le \email{Thuc.Le@unisa.edu.au}
-}
 \references{
 Smyth, Gordon K. "Limma: linear models for microarray data." Bioinformatics and computational biology solutions using R and Bioconductor. 
 Springer New York, 2005. 397-420.
 }
-
+\author{
+Xu,Taosheng \email{taosheng.x@gmail.com},Thuc Le \email{Thuc.Le@unisa.edu.au}
+}

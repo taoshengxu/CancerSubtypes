@@ -15,4 +15,3 @@ datasets.
 data(time)
 }
 \keyword{datasets}
-

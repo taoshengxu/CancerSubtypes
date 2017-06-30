@@ -64,4 +64,3 @@ result$group
 \seealso{
 \code{\link{ExecuteSNF}} \code{\link{ExecuteCC}}
 }
-

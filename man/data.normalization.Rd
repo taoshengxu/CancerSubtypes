@@ -32,4 +32,3 @@ data(GeneExp)
 result=data.normalization(GeneExp,type="feature_Median",log2=FALSE)
 
 }
-

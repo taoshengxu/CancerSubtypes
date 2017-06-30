@@ -57,4 +57,3 @@ result$group
 \seealso{
 \code{\link{nmf}}
 }
-

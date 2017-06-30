@@ -43,9 +43,6 @@ group=result$group
 sigclust1=sigclustTest(miRNAExp,group, nsim=500, nrep=1, icovest=3)
 sigclust2=sigclustTest(miRNAExp,group, nsim=1000, nrep=1, icovest=1)
 }
-\author{
-Xu,Taosheng \email{taosheng.x@gmail.com},Thuc Le \email{Thuc.Le@unisa.edu.au}
-}
 \references{
 Liu, Yufeng, Hayes, David Neil, Nobel, Andrew and Marron, J. S, 2008, Statistical Significance of Clustering for High-Dimension, Low-Sample Size Data, Journal of the American Statistical Association 103(483) 1281-1293.\cr
 Huang, Hanwen, Yufeng Liu, Ming Yuan, and J. S. Marron. "Statistical Significance of Clustering Using Soft Thresholding." Journal of Computational and Graphical Statistics, no. just-accepted (2014): 00-00.
@@ -53,4 +50,6 @@ Huang, Hanwen, Yufeng Liu, Ming Yuan, and J. S. Marron. "Statistical Significanc
 \seealso{
 \code{\link{sigclust}}
 }
-
+\author{
+Xu,Taosheng \email{taosheng.x@gmail.com},Thuc Le \email{Thuc.Le@unisa.edu.au}
+}

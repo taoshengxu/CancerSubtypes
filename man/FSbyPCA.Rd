@@ -28,4 +28,3 @@ data1=FSbyPCA(GeneExp, PC_percent=0.9,scale = TRUE)
 \author{
 Xu,Taosheng \email{taosheng.x@gmail.com},Thuc Le \email{Thuc.Le@unisa.edu.au}
 }
-
