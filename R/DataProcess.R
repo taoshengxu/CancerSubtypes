@@ -148,6 +148,7 @@ data.imputation<-function(Data,fun="median")
   {
     result=impute.knn(Data)$data
   }
+  colnames(result)=colnames(Data)
   result
 }
   
