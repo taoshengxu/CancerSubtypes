@@ -371,14 +371,14 @@ ExecuteSNF.CC<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,
 #' GBM=list(GeneExp,miRNAExp)
 #' ###1. Use the defualt ranking in the package.
 #' data(Ranking)
-#' ####Retrieve there feature ranking for genes
+#' ####Retrieve the feature ranking for genes
 #' gene_Name=rownames(GeneExp)
-#' index1=match(gene_Name,Ranking$mRNA_TF_miRNA.v21._SYMBOL)
+#' index1=match(gene_Name,Ranking$mRNA_TF_miRNA.v21_SYMBOL)
 #' gene_ranking=data.frame(gene_Name,Ranking[index1,],stringsAsFactors=FALSE)
 #' index2=which(is.na(gene_ranking$ranking_default))
 #' gene_ranking$ranking_default[index2]=min(gene_ranking$ranking_default,na.rm =TRUE)
 #' 
-#' ####Retrieve there feature ranking for genes
+#' ####Retrieve the feature ranking for miRNAs
 #' miRNA_ID=rownames(miRNAExp)
 #' index3=match(miRNA_ID,Ranking$mRNA_TF_miRNA_ID)
 #' miRNA_ranking=data.frame(miRNA_ID,Ranking[index3,],stringsAsFactors=FALSE)
