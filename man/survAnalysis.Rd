@@ -48,7 +48,7 @@ p_value1=survAnalysis(mainTitle="GBM_SNF",time,status,group1,
 data(Ranking)
 ####Retrieve there feature ranking for genes
 gene_Name=rownames(data1)
-index1=match(gene_Name,Ranking$mRNA_TF_miRNA.v21._SYMBOL)
+index1=match(gene_Name,Ranking$mRNA_TF_miRNA.v21_SYMBOL)
 gene_ranking=data.frame(gene_Name,Ranking[index1,],stringsAsFactors=FALSE)
 index2=which(is.na(gene_ranking$ranking_default))
 gene_ranking$ranking_default[index2]=min(gene_ranking$ranking_default,na.rm =TRUE)
