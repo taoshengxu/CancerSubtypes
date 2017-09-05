@@ -2,7 +2,7 @@
 
 # CancerSubtypes: an R/Bioconductor package for molecular cancer subtype identification, validation, and visualization
 
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/xtsvm/CancerSubtypes?branch=master&svg=true)](https://ci.appveyor.com/project/xtsvm/CancerSubtypes)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/taoshengxu/CancerSubtypes?branch=master&svg=true)](https://ci.appveyor.com/project/taoshengxu/CancerSubtypes)
 [![bioc](http://www.bioconductor.org/shields/downloads/CancerSubtypes.svg)](http://bioconductor.org/packages/stats/bioc/CancerSubtypes.html)
 [![bioc](http://www.bioconductor.org/shields/years-in-bioc/CancerSubtypes.svg)](http://bioconductor.org/packages/CancerSubtypes/)
 [![bioc](http://bioconductor.org/shields/availability/devel/CancerSubtypes.svg)](http://bioconductor.org/packages/CancerSubtypes/)
@@ -23,7 +23,6 @@ devtools::install_github("taoshengxu/CancerSubtypes")
 Tutorial and examples can be found  [here](https://bioconductor.org/packages/devel/bioc/vignettes/CancerSubtypes/inst/doc/CancerSubtypes-vignette.html).
 
 <!--(http://htmlpreview.github.io/?https://github.com/taoshengxu/Documents/blob/master/CancerSubtypes-vignette.html)-->
-<!--(https://github.com/taoshengxu/CancerSubtypes/blob/master/vignettes/CancerSubtypes-vignette.Rmd)-->
 
 
 ------------------------------------------------------------------------
