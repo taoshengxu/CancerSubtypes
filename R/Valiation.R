@@ -177,7 +177,7 @@ survAnalysis<-function(mainTitle="Survival Analysis",time,status,group,distanceM
     names(Var1) = sort(unique(group))
     ann_colors =  list(group=Var1)
     
-    consensusmap(distanceMatrix,Rowv=ind,Colv=ind,main = "Clustering dispaly",
+    consensusmap(distanceMatrix,Rowv=ind,Colv=ind,main = "Clustering display",
                  annCol = annotation,annColors=ann_colors,
                  labRow ="Sample", labCol = "Sample",scale="none")
     
