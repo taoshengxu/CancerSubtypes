@@ -15,15 +15,15 @@ The R/Bioconductor package `CancerSubtypes` integrates the current common comput
 ## Installing CancerSubtypes
 
 ```{r,eval=FALSE,warning=FALSE,message=FALSE}
-devtools::install_github("xtsvm/CancerSubtypes")
+devtools::install_github("taoshengxu/CancerSubtypes")
 ```
 ------------------------------------------------------------------------
 
 ## Manual
 Tutorial and examples can be found  [here](https://bioconductor.org/packages/devel/bioc/vignettes/CancerSubtypes/inst/doc/CancerSubtypes-vignette.html).
 
-<!--(http://htmlpreview.github.io/?https://github.com/xtsvm/Documents/blob/master/CancerSubtypes-vignette.html)-->
-<!--(https://github.com/xtsvm/CancerSubtypes/blob/master/vignettes/CancerSubtypes-vignette.Rmd)-->
+<!--(http://htmlpreview.github.io/?https://github.com/taoshengxu/Documents/blob/master/CancerSubtypes-vignette.html)-->
+<!--(https://github.com/taoshengxu/CancerSubtypes/blob/master/vignettes/CancerSubtypes-vignette.Rmd)-->
 
 
 ------------------------------------------------------------------------
