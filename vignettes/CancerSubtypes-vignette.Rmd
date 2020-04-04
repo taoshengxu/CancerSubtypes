@@ -274,7 +274,7 @@ The SigClust summary plots show the distributions of cluster index (CI). The blu
 
 Differential expression analysis is to test the expression difference between each subtypes and a reference group (always a set of normal samples). Here we apply *limma* package to conduct the different expression analysis between each subtypes and normal samples.
 
-```{r results="hide",message=FALSE,fig.show="hide"}
+```{r results="hide",message=FALSE,fig.show="hide",warning=FALSE}
 library("RTCGA.mRNA")
 #require(TCGAbiolinks)
 rm(list = ls())

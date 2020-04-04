@@ -432,9 +432,9 @@ sigclustTest<-function(Data,group, nsim=1000, nrep=1, icovest=1)
       
       res<-sigclust(x=data1, nsim=nsim, nrep=nrep, labflag=1, label=label, icovest=icovest)
       
-      plot(res,arg="pvalue",sub=paste("subtype",groupN[i],"and","subtype",groupN[j]))
-      pvalue[i,j]=res@pval
-      pvalue[j,i]=res@pval
+      #plot(res,arg="pvalue",sub=paste("subtype",groupN[i],"and","subtype",groupN[j]))
+      pvalue[i,j]=as.numeric(res@pval) 
+      pvalue[j,i]=pvalue[i,j]
     }
   }
   diag(pvalue)=1

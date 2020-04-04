@@ -30,6 +30,6 @@ Tutorial and examples can be found  [here](https://bioconductor.org/packages/dev
 ## Citation
 Please cite the following article when using `CancerSubtypes`:
 
-[![doi](https://img.shields.io/badge/doi-10.1093/bioinformatics/btx378-green.svg?style=flat)](https://doi.org/10.1093/bioinformatics/btx378) [![citation](https://img.shields.io/badge/cited%20by-0-green.svg?style=flat)](https://doi.org/10.1093/bioinformatics/btx378) [![Altmetric](https://img.shields.io/badge/Altmetric-2-green.svg?style=flat)](https://www.altmetric.com/details/21038105)
+[![doi](https://img.shields.io/badge/doi-10.1093/bioinformatics/btx378-green.svg?style=flat)](https://doi.org/10.1093/bioinformatics/btx378) [![citation](https://img.shields.io/badge/cited%20by-34-green.svg?style=flat)](https://doi.org/10.1093/bioinformatics/btx378) [![Altmetric](https://img.shields.io/badge/Altmetric-2-green.svg?style=flat)](https://www.altmetric.com/details/21038105)
 
 Xu, T. et al. CancerSubtypes: an R/Bioconductor package for molecular cancer subtype identification, validation, and visualization. Bioinformatics (2017) [doi:10.1093/bioinformatics/btx378](https://doi.org/10.1093/bioinformatics/btx378).
