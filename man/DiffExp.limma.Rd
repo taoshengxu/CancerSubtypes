@@ -4,8 +4,15 @@
 \alias{DiffExp.limma}
 \title{DiffExp.limma}
 \usage{
-DiffExp.limma(Tumor_Data, Normal_Data, group = NULL, topk = NULL,
-  sort.by = "p", adjust.method = "BH", RNAseq = FALSE)
+DiffExp.limma(
+  Tumor_Data,
+  Normal_Data,
+  group = NULL,
+  topk = NULL,
+  sort.by = "p",
+  adjust.method = "BH",
+  RNAseq = FALSE
+)
 }
 \arguments{
 \item{Tumor_Data}{A matrix representing the genomic data of cancer samples such as gene expression data, miRNA expression data.\cr

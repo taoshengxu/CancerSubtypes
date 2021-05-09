@@ -191,7 +191,6 @@ ExecuteiCluster<-function(datasets, k, lambda=NULL, scale=TRUE, scalar=FALSE, ma
 #' Please note: The data matrices are transposed in our function comparing to the original R package "SNFtools".
 #' We try to build a standardized flow for cancer subtypes analysis and validation.
 #'
-#' @importFrom SNFtool dist2 affinityMatrix SNF spectralClustering displayClusters
 #' @param datasets A list containing data matrices. For each data matrix, the rows represent genomic features, and the columns represent samples.
 #' @param clusterNum A integer representing the return cluster number
 #' @param K Number of nearest neighbors
@@ -217,7 +216,6 @@ ExecuteiCluster<-function(datasets, k, lambda=NULL, scale=TRUE, scalar=FALSE, ma
 #' @references
 #' B Wang, A Mezlini, F Demir, M Fiume, T Zu, M Brudno, B Haibe-Kains, A Goldenberg (2014) Similarity Network Fusion: a fast and effective method to aggregate multiple data types on a genome wide scale. Nature Methods. Online. Jan 26, 2014
 #' 
-#' @seealso \code{\link{affinityMatrix}} \code{\link{SNF}}
 #' @examples
 #' data(GeneExp)
 #' data(miRNAExp)
@@ -235,7 +233,7 @@ ExecuteSNF<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,plot=TRUE)
     distance=dist2(as.matrix(t(datasets[[i]])), as.matrix(t(datasets[[i]])))
     W_temp[[i]] = affinityMatrix(distance, K, alpha)
   }
-  W = SNFtool::SNF(W_temp, K=K, t=t)
+  W = SNF(W_temp, K=K, t=t)
   group =spectralClustering(W,clusterNum)
   
   diag(W)=0
@@ -256,7 +254,6 @@ ExecuteSNF<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,plot=TRUE)
 #' First it applied SNF to get the fusion patients similarity matrix. Then use this 
 #' fusion patients similarity matrix as the sample distance for Consensus Clustering.
 #'
-#' @importFrom SNFtool dist2 affinityMatrix SNF 
 #' @param datasets A list containing data matrices. For each data matrix, 
 #' the rows represent genomic features, and the columns represent samples. Same as ExecuteSNF
 #' @param clusterNum A integer representing the return cluster number. Same as ExecuteSNF
@@ -311,7 +308,7 @@ ExecuteSNF.CC<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,
     distance=dist2(as.matrix(t(datasets[[i]])), as.matrix(t(datasets[[i]])))
     W_temp[[i]] = affinityMatrix(distance, K, alpha)
   }
-  W = SNFtool::SNF(W_temp, K=K, t=t)
+  W = SNF(W_temp, K=K, t=t)
   W=as.dist(W)
   result=ExecuteCC(clusterNum=clusterNum,d=W,maxK=maxK,
                    clusterAlg="spectralAlg",title=title,reps=reps,
@@ -327,7 +324,6 @@ ExecuteSNF.CC<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,
 #' to set the different regulatory importance(ranking) for each feature. In the WSNF manuscript, WSNF makes use of the miRNA-TF-mRNA regulatory 
 #' network to take the importance of the features into consideration.
 #' 
-#' @importFrom SNFtool affinityMatrix SNF 
 #' @param datasets A list containing data matrices. For each data matrix, the rows represent genomic features, and the columns represent samples.
 #' @param feature_ranking A list containing numeric vetors. The length of the feature_ranking list should equal to the length of datasets list.
 #' For each numeric vetor represents the ranking of each feature in the corresponding data matrix. The order of the ranking should also mathch 
@@ -414,7 +410,7 @@ ExecuteWSNF<-function(datasets,feature_ranking,beta=0.8,clusterNum,K=20, alpha=0
         distance=.distanceWeighted2(as.matrix(t(datasets[[i]])),weight)
         W_temp[[i]] = affinityMatrix(distance, K, alpha)
       }
-      W = SNFtool::SNF(W_temp, K=K, t=t)
+      W = SNF(W_temp, K=K, t=t)
       group =spectralClustering(W,clusterNum)
       
       diag(W)=0

@@ -4,7 +4,9 @@
 \name{miRNAExp}
 \alias{miRNAExp}
 \title{Dataset: miRNA expression}
-\format{A data matrix}
+\format{
+A data matrix
+}
 \description{
 A glioblastoma (GBM) miRNA expression dataset downloaded from TCGA. This is a small miRNA expression dataset with 470 miRNAs and 
 100 cancer samples extracted from miRNA expression data for examples.

@@ -4,8 +4,13 @@
 \alias{saveFigure}
 \title{This function save the figure in the current plot.}
 \usage{
-saveFigure(foldername = NULL, filename = "saveFig", image_width = 10,
-  image_height = 10, image_res = 300)
+saveFigure(
+  foldername = NULL,
+  filename = "saveFig",
+  image_width = 10,
+  image_height = 10,
+  image_res = 300
+)
 }
 \arguments{
 \item{foldername}{Character values. It specifies the folder name which will be created in the present working path.}

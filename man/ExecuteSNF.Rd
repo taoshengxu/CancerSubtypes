@@ -4,8 +4,7 @@
 \alias{ExecuteSNF}
 \title{Execute SNF(Similarity Network Fusion )}
 \usage{
-ExecuteSNF(datasets, clusterNum, K = 20, alpha = 0.5, t = 20,
-  plot = TRUE)
+ExecuteSNF(datasets, clusterNum, K = 20, alpha = 0.5, t = 20, plot = TRUE)
 }
 \arguments{
 \item{datasets}{A list containing data matrices. For each data matrix, the rows represent genomic features, and the columns represent samples.}
@@ -60,7 +59,4 @@ result$group
 }
 \references{
 B Wang, A Mezlini, F Demir, M Fiume, T Zu, M Brudno, B Haibe-Kains, A Goldenberg (2014) Similarity Network Fusion: a fast and effective method to aggregate multiple data types on a genome wide scale. Nature Methods. Online. Jan 26, 2014
-}
-\seealso{
-\code{\link{affinityMatrix}} \code{\link{SNF}}
 }

@@ -4,8 +4,14 @@
 \alias{ExecuteiCluster}
 \title{Execute iCluster (Integrative clustering of multiple genomic data)}
 \usage{
-ExecuteiCluster(datasets, k, lambda = NULL, scale = TRUE, scalar = FALSE,
-  max.iter = 10)
+ExecuteiCluster(
+  datasets,
+  k,
+  lambda = NULL,
+  scale = TRUE,
+  scalar = FALSE,
+  max.iter = 10
+)
 }
 \arguments{
 \item{datasets}{A list containing data matrices. For each data matrix, the rows represent genomic features, and the columns represent samples.

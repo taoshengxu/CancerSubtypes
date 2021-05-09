@@ -4,8 +4,16 @@
 \alias{ExecuteWSNF}
 \title{Execute the WSNF(Weighted Similarity Network Fusion)}
 \usage{
-ExecuteWSNF(datasets, feature_ranking, beta = 0.8, clusterNum, K = 20,
-  alpha = 0.5, t = 20, plot = TRUE)
+ExecuteWSNF(
+  datasets,
+  feature_ranking,
+  beta = 0.8,
+  clusterNum,
+  K = 20,
+  alpha = 0.5,
+  t = 20,
+  plot = TRUE
+)
 }
 \arguments{
 \item{datasets}{A list containing data matrices. For each data matrix, the rows represent genomic features, and the columns represent samples.}

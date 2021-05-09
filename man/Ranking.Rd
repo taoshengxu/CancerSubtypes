@@ -4,7 +4,9 @@
 \name{Ranking}
 \alias{Ranking}
 \title{Dataset: A default ranking of features for the fuction ExecuteWSNF()}
-\format{dataframe}
+\format{
+dataframe
+}
 \description{
 A dataframe represents the regulatory ranking for features(mRNA,TF,miRNA) caculated based on the miRNA-TF-miRNA regulatory network which was promoted in our published work: 
 Identifying Cancer Subtypes from miRNA-TF-mRNA Regulatory Networks and Expression Data(PLos One,2016).
