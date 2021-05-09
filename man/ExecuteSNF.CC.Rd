@@ -4,9 +4,19 @@
 \alias{ExecuteSNF.CC}
 \title{Execute the combined SNF (Similarity Network Fusion) and Consensus clustering}
 \usage{
-ExecuteSNF.CC(datasets, clusterNum, K = 20, alpha = 0.5, t = 20,
-  maxK = 10, pItem = 0.8, reps = 500, title = "ConsensusClusterResult",
-  plot = "png", finalLinkage = "average")
+ExecuteSNF.CC(
+  datasets,
+  clusterNum,
+  K = 20,
+  alpha = 0.5,
+  t = 20,
+  maxK = 10,
+  pItem = 0.8,
+  reps = 500,
+  title = "ConsensusClusterResult",
+  plot = "png",
+  finalLinkage = "average"
+)
 }
 \arguments{
 \item{datasets}{A list containing data matrices. For each data matrix, 

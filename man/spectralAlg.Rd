@@ -23,8 +23,8 @@ a tiny modification.
 \examples{
 ####see the spectralClustering() in SNFtool package for the detail example.
 data(miRNAExp)
-Dist1=SNFtool::dist2(t(miRNAExp),t(miRNAExp))
-W1 = SNFtool::affinityMatrix(Dist1, 20, 0.5)
-group=spectralAlg(W1,3, type = 3)
+#Dist1=dist2(t(miRNAExp),t(miRNAExp))
+#W1 = affinityMatrix(Dist1, 20, 0.5)
+#group=spectralAlg(W1,3, type = 3)
 
 }

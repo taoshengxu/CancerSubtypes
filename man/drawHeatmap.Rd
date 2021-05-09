@@ -4,9 +4,16 @@
 \alias{drawHeatmap}
 \title{Generate heatmaps}
 \usage{
-drawHeatmap(data, group = NULL, silhouette = NULL, scale = "no",
-  labRow = NULL, labCol = NULL, color = colorRampPalette(c("green",
-  "black", "red"))(300), Title = NA)
+drawHeatmap(
+  data,
+  group = NULL,
+  silhouette = NULL,
+  scale = "no",
+  labRow = NULL,
+  labCol = NULL,
+  color = colorRampPalette(c("green", "black", "red"))(300),
+  Title = NA
+)
 }
 \arguments{
 \item{data}{A matrix representing the genomic data such as gene expression data, miRNA expression data.\cr

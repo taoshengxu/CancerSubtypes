@@ -4,8 +4,14 @@
 \alias{survAnalysis}
 \title{Survival analysis(Survival curves, Log-rank test) and compute Silhouette information for cancer subtypes}
 \usage{
-survAnalysis(mainTitle = "Survival Analysis", time, status, group,
-  distanceMatrix = NULL, similarity = TRUE)
+survAnalysis(
+  mainTitle = "Survival Analysis",
+  time,
+  status,
+  group,
+  distanceMatrix = NULL,
+  similarity = TRUE
+)
 }
 \arguments{
 \item{mainTitle}{A character will display in the result plot.}

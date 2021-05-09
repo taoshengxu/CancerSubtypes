@@ -4,7 +4,9 @@
 \name{status}
 \alias{status}
 \title{Dataset: Survival status}
-\format{A numeric vector}
+\format{
+A numeric vector
+}
 \description{
 \itemize{
  \item A vector representing the survival status for GBM cancer patients matched with the "GeneExp" and "miRNAExp"

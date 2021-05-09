@@ -4,7 +4,9 @@
 \name{time}
 \alias{time}
 \title{Dataset: Survival time}
-\format{A numeric vector}
+\format{
+A numeric vector
+}
 \description{
 \itemize{
  \item A vector representing the right censored survival time (days) for GBM cancer patients matched with the "GeneExp" and "miRNAExp"

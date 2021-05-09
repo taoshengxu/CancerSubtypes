@@ -4,11 +4,25 @@
 \alias{ExecuteCC}
 \title{Execute Consensus Clustering}
 \usage{
-ExecuteCC(clusterNum, d, maxK = 10, clusterAlg = "hc",
-  distance = "pearson", title = "ConsensusClusterResult", reps = 500,
-  pItem = 0.8, pFeature = 1, plot = "png", innerLinkage = "average",
-  finalLinkage = "average", writeTable = FALSE, weightsItem = NULL,
-  weightsFeature = NULL, verbose = FALSE, corUse = "everything")
+ExecuteCC(
+  clusterNum,
+  d,
+  maxK = 10,
+  clusterAlg = "hc",
+  distance = "pearson",
+  title = "ConsensusClusterResult",
+  reps = 500,
+  pItem = 0.8,
+  pFeature = 1,
+  plot = "png",
+  innerLinkage = "average",
+  finalLinkage = "average",
+  writeTable = FALSE,
+  weightsItem = NULL,
+  weightsFeature = NULL,
+  verbose = FALSE,
+  corUse = "everything"
+)
 }
 \arguments{
 \item{clusterNum}{A integer representing the return cluster number, this value should be less

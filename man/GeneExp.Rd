@@ -4,7 +4,9 @@
 \name{GeneExp}
 \alias{GeneExp}
 \title{Dataset: Gene expression}
-\format{A data matrix}
+\format{
+A data matrix
+}
 \description{
 A glioblastoma (GBM) gene expression dataset downloaded from TCGA. This is a small dataset with 1500 genes 
 and  100 cancer samples extracted from gene expression data for examples.
