@@ -28,6 +28,7 @@
 #' @param weightsFeature Please refer to the "ConsensusClusterPlus" package for detailed information.
 #' @param verbose Please refer to the "ConsensusClusterPlus" package for detailed information.
 #' @param corUse Please refer to the "ConsensusClusterPlus" package for detailed information.
+#' @param seed random seed for reproducible result. Please refer to the "ConsensusClusterPlus" package for detailed information.
 
 #' @return A list with the following elements.
 #'\itemize{
@@ -76,7 +77,7 @@ ExecuteCC<-function(clusterNum,
                     reps=500, pItem=0.8, pFeature=1,plot="png",
                     innerLinkage="average", finalLinkage="average",
                     writeTable=FALSE,weightsItem=NULL,weightsFeature=NULL,
-                    verbose=FALSE,corUse="everything")
+                    verbose=FALSE,corUse="everything", seed=NULL)
 {
   if(is.list(d))
   {
@@ -95,7 +96,7 @@ ExecuteCC<-function(clusterNum,
       reps=reps, pItem=pItem, pFeature=pFeature,plot=plot,
       innerLinkage=innerLinkage, finalLinkage=finalLinkage,
       writeTable=writeTable,weightsItem=weightsItem,weightsFeature=weightsFeature,
-      verbose=verbose,corUse=corUse)
+      verbose=verbose,corUse=corUse, seed=seed)
   group=originalResult[[clusterNum]][["consensusClass"]]
   distanceMatrix=originalResult[[clusterNum]][["consensusMatrix"]]
   attr(distanceMatrix,'class')="Similarity"
