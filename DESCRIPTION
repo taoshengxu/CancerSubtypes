@@ -1,11 +1,12 @@
 Package: CancerSubtypes
 Type: Package
 Title: Cancer subtypes identification, validation and visualization based on multiple genomic data sets
-Version: 1.24.0
-Date: 2016-06-30
+Version: 1.24.1
+Date: 2023-01-09
 Authors@R: person("Taosheng", "Xu", email = "taosheng.x@gmail.com",role = c("aut", "cre"))
 Depends: R (>= 4.0), sigclust, NMF
-Imports: cluster, impute, limma, ConsensusClusterPlus, grDevices, survival
+Imports: iCluster, cluster, impute, limma, ConsensusClusterPlus,
+        grDevices, survival
 Description: CancerSubtypes integrates the current common computational biology methods for cancer subtypes identification and provides a standardized framework for cancer subtype analysis based multi-omics data, such as gene expression, miRNA expression, DNA methylation and others.
 License: GPL (>= 2)
 Suggests: BiocGenerics, knitr, RTCGA.mRNA, rmarkdown
@@ -14,3 +15,12 @@ biocViews: Clustering, Software, Visualization, GeneExpression
 URL: https://github.com/taoshengxu/CancerSubtypes
 BugReports: https://github.com/taoshengxu/CancerSubtypes/issues
 RoxygenNote: 7.1.1
+git_url: https://git.bioconductor.org/packages/CancerSubtypes
+git_branch: RELEASE_3_15
+git_last_commit: 871bfcd
+git_last_commit_date: 2022-04-26
+Date/Publication: 2022-04-26
+NeedsCompilation: no
+Packaged: 2022-04-26 20:11:50 UTC; biocbuild
+Author: Taosheng Xu [aut, cre]
+Maintainer: Taosheng Xu <taosheng.x@gmail.com>

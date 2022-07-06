@@ -165,7 +165,7 @@ data(miRNAExp)
 data(Ranking)
 ####Retrieve there feature ranking for genes
 gene_Name=rownames(GeneExp)
-index1=match(gene_Name,Ranking$mRNA_TF_miRNA.v21._SYMBOL)
+index1=match(gene_Name,Ranking$mRNA_TF_miRNA.v21_SYMBOL)
 gene_ranking=data.frame(gene_Name,Ranking[index1,],stringsAsFactors=FALSE)
 index2=which(is.na(gene_ranking$ranking_default))
 gene_ranking$ranking_default[index2]=min(gene_ranking$ranking_default,na.rm =TRUE)
@@ -274,7 +274,7 @@ The SigClust summary plots show the distributions of cluster index (CI). The blu
 
 Differential expression analysis is to test the expression difference between each subtypes and a reference group (always a set of normal samples). Here we apply *limma* package to conduct the different expression analysis between each subtypes and normal samples.
 
-```{r results="hide",message=FALSE,fig.show="hide"}
+```{r results="hide",message=FALSE,fig.show="hide",warning=FALSE}
 library("RTCGA.mRNA")
 #require(TCGAbiolinks)
 rm(list = ls())
