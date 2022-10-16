@@ -1,20 +1,20 @@
 #' Execute Consensus Clustering
 #'
-#' This function is based on the R package "ConsensusClusterPlus". 
+#' This function is based on the R package "ConsensusClusterPlus".
 #' We write a shell to unify the input and output format.
-#' It is helpful for the standardized flow of cancer subtypes analysis and validation. 
+#' It is helpful for the standardized flow of cancer subtypes analysis and validation.
 #' The parameters are compatible to the original R package "ConsensusClusterPlus" function "ConsensusClusterPlus()".\cr
-#' Please note: we add a new parameter "clusterNum" which represents the result with cancer subtypes group we want to return. 
-#' 
+#' Please note: we add a new parameter "clusterNum" which represents the result with cancer subtypes group we want to return.
+#'
 #' @importFrom ConsensusClusterPlus ConsensusClusterPlus
 #' @param clusterNum A integer representing the return cluster number, this value should be less
 #' than maxClusterNum(maxK). This is the only additional parameter in our function compared to the original
 #' R package "ConsensusClusterPlus". All the other parameters are compatible to the function "ConsensusClusterPlus().
-#' @param d data to be clustered; either a data matrix where columns=items/samples and rows are features. For example, a gene expression matrix of genes in rows and microarrays in columns, or ExpressionSet object, or a distance object (only for cases of no feature resampling)  
-#' 
+#' @param d data to be clustered; either a data matrix where columns=items/samples and rows are features. For example, a gene expression matrix of genes in rows and microarrays in columns, or ExpressionSet object, or a distance object (only for cases of no feature resampling)
+#'
 #' Please Note: We add a new data type (list) for this parameter. Please see details and examples.
 #' @param maxK integer value. maximum cluster number  for Consensus Clustering Algorithm to evaluate.
-#' @param reps  integer value. number of subsamples(in other words, The iteration number of each cluster number) 
+#' @param reps  integer value. number of subsamples(in other words, The iteration number of each cluster number)
 #' @param clusterAlg character value. cluster algorithm. 'hc' heirarchical (hclust), 'pam' for paritioning around medoids, 'km' for k-means upon data matrix, 'kmdist' for k-means upon distance matrices (former km option), or a function that returns a clustering.
 #' @param distance character value. 'pearson': (1 - Pearson correlation), 'spearman' (1 - Spearman correlation), 'euclidean', 'binary', 'maximum', 'canberra', 'minkowski" or custom distance function.
 #' @param  title character value for output directory. This title can be an absolute or relative path
@@ -32,40 +32,40 @@
 #' @return A list with the following elements.
 #'\itemize{
 #'  \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
-#'   
-#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+#'
+#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group
 #'   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
 #'   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
-#'   
+#'
 #'  \item \strong{distanceMatrix} : It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
-#'   
+#'
 #'   We extracted this matrix from the algorithmic procedure because it is useful for similarity analysis among the samples based on the clustering results.
-#'   
+#'
 #'  \item \strong{originalResult} : The clustering result of the original function "ConsensusClusterPlus()"
-#'  
+#'
 #'  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
 #'  }
-#'  
-#' @details 
+#'
+#' @details
 #'  If the data is a list containing the matched mutli-genomics  data matrices like the input as "ExecuteiCluster()" and "ExecuteSNF()",
 #'   we use "z-score" to normalize features for each data matrix first. Then all the normalized data matrices from the data list are concatenated
 #'   according to samples. The concatenated data matrix is the samples with a long features (all features in the data list).
 #'   Our purpose is to make convenient comparing the different method with same dataset format. See examples.
-#'   
+#'
 #' @seealso \code{ConsensusClusterPlus}
-#'   
+#'
 #' @examples
 #' ### The input dataset is a single gene expression matrix.
 #' data(GeneExp)
 #' data(miRNAExp)
 #' result1=ExecuteCC(clusterNum=3,d=GeneExp,maxK=10,clusterAlg="hc",distance="pearson",title="GBM")
 #' result1$group
-#' 
+#'
 #' ### The input dataset is multi-genomics data as a list
 #' GBM=list(GeneExp=GeneExp,miRNAExp=miRNAExp)
 #' result2=ExecuteCC(clusterNum=3,d=GBM,maxK=5,clusterAlg="hc",distance="pearson",title="GBM")
 #' result2$group
-#' 
+#'
 #' @references
 #' Monti, S., Tamayo, P., Mesirov, J., Golub, T. (2003) Consensus Clustering: A Resampling-Based Method for Class Discovery and Visualization of Gene Expression Microarray Data. Machine Learning, 52, 91-118.
 #' @export
@@ -108,17 +108,16 @@ ExecuteCC<-function(clusterNum,
 
 #' Execute iCluster (Integrative clustering of multiple genomic data)
 #'
-#' Shen (2009) proposed a latent variable regression with a lasso constraint for joint modeling of multiple omics 
+#' Shen (2009) proposed a latent variable regression with a lasso constraint for joint modeling of multiple omics
 #' data types to identify common latent variables that can be used to cluster patient samples into biologically and clinically relevant disease subtypes.\cr
-#' This function is based on the R package "iCluster". 
-#' The R package "iCluster" should be installed. 
+#' This function is based on the R package "iCluster".
+#' The R package "iCluster" should be installed.
 #' We write a shell to unify the input and output format.
-#' It is helpful for the standardized flow of cancer subtypes analysis and validation. 
+#' It is helpful for the standardized flow of cancer subtypes analysis and validation.
 #' The parameters is compatible to the original R package "iCluster" function "iCluster2()".\cr
 #' Please note: The data matrices are transposed in our function comparing to the original R package "iCluster" on the behalf of the unified input format with other functions.
 #' We try to build a standardized flow for cancer subtypes analysis and validation.
 #'
-#' @importFrom iCluster iCluster2 plotiCluster
 #' @param datasets A list containing data matrices. For each data matrix, the rows represent genomic features, and the columns represent samples.
 #' In order to unify the input parameter with other clustering methods, the data matrices are transposed comparing to the definition in the original "iCluster" package.
 #' @param k Number of subtypes for the samples
@@ -130,26 +129,26 @@ ExecuteCC<-function(clusterNum,
 #' @return A list with the following elements.
 #'\itemize{
 #'   \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
-#'   
-#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+#'
+#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group
 #'   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
 #'   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
-#'   
+#'
 #'  \item \strong{originalResult} : The clustering result of the original function "iCluster2()".
-#'  
+#'
 #'  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
 #'  }
-#'  
-#'  
-#' @details 
-#'  For iCluster algorithm, it cannot process high-dimensional data, otherwise it is very very time-consuming or reports a mistake.  
+#'
+#'
+#' @details
+#'  For iCluster algorithm, it cannot process high-dimensional data, otherwise it is very very time-consuming or reports a mistake.
 #'  Based on test, it could smoothly run for the matrix with around 1500 features. Normally it need feature selection step first to reduce feature number.
 #' @references
 #' Ronglai Shen, Adam Olshen, Marc Ladanyi. (2009). Integrative clustering of multiple genomic data types using a joint latent variable model with application to breast and lung cancer subtype analysis. Bioinformatics 25, 2906-2912.\cr
 #' Ronglai Shen, Qianxing Mo, Nikolaus Schultz, Venkatraman E. Seshan, Adam B. Olshen, Jason Huse, Marc Ladanyi, Chris Sander. (2012). Integrative Subtype Discovery in Glioblastoma Using iCluster. PLoS ONE 7, e35236
-#' 
+#'
 #' @seealso \code{\link{iCluster2}}
-#' 
+#'
 #' @examples
 #' data(GeneExp)
 #' data(miRNAExp)
@@ -167,9 +166,9 @@ ExecuteiCluster<-function(datasets, k, lambda=NULL, scale=TRUE, scalar=FALSE, ma
   {
     data1[[i]]=t(datasets[[i]])
   }
-  
-  fit=iCluster2(datasets=data1, k=k, lambda=lambda, scale=scale, scalar=scalar, max.iter=10) 
-  
+
+  fit=iCluster2(datasets=data1, k=k, lambda=lambda, scale=scale, scalar=scalar, max.iter=10)
+
   plotiCluster(fit=fit, label=rownames(data1[[1]]))
   group=fit$clusters
   result=list(group=group,originalResult=fit)
@@ -180,12 +179,12 @@ ExecuteiCluster<-function(datasets, k, lambda=NULL, scale=TRUE, scalar=FALSE, ma
 #' Execute SNF(Similarity Network Fusion )
 #'
 #' SNF is a multi-omics data processing method that constructs a fusion patient similarity network
-#' by integrating the patient similarity obtained from each of the genomic data types. 
+#' by integrating the patient similarity obtained from each of the genomic data types.
 #' SNF calculates the similarity between patients using each single data type separately. The similarities
-#' between patients from different data types are then integrated by a cross-network diffusion process to construct the fusion patient similarity matrix. 
+#' between patients from different data types are then integrated by a cross-network diffusion process to construct the fusion patient similarity matrix.
 #' Finally, a clustering method is applied to the fusion patient similarity matrix to cluster patients into different groups, which imply different cancer subtypes.
-#' This function is based on the R package "SNFtool". 
-#' The R package "SNFtool" should be installed. 
+#' This function is based on the R package "SNFtool".
+#' The R package "SNFtool" should be installed.
 #' We write a function to integrate the clustering process and unify the input and output format.
 #' It is helpful for the standardized flow of cancer subtypes analysis and validation.\cr
 #' Please note: The data matrices are transposed in our function comparing to the original R package "SNFtools".
@@ -200,22 +199,22 @@ ExecuteiCluster<-function(datasets, k, lambda=NULL, scale=TRUE, scalar=FALSE, ma
 #' @return A list with the following elements.
 #'\itemize{
 #'  \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
-#'   
-#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+#'
+#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group
 #'   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
 #'   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
-#'   
+#'
 #'  \item \strong{distanceMatrix} : It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
-#'   
+#'
 #'   We extracted this matrix from the algorithmic procedure because it is useful for similarity analysis among the samples based on the clustering results.
-#'   
+#'
 #'  \item \strong{originalResult} : The clustering result of the original SNF algorithm"
-#'  
+#'
 #'  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
 #'  }
 #' @references
 #' B Wang, A Mezlini, F Demir, M Fiume, T Zu, M Brudno, B Haibe-Kains, A Goldenberg (2014) Similarity Network Fusion: a fast and effective method to aggregate multiple data types on a genome wide scale. Nature Methods. Online. Jan 26, 2014
-#' 
+#'
 #' @examples
 #' data(GeneExp)
 #' data(miRNAExp)
@@ -235,12 +234,12 @@ ExecuteSNF<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,plot=TRUE)
   }
   W = SNF(W_temp, K=K, t=t)
   group =spectralClustering(W,clusterNum)
-  
+
   diag(W)=0
   diag(W)=max(W)
   distanceMatrix=W
   attr(distanceMatrix,'class')="Similarity"
-  
+
   if(plot)
     displayClusters(W, group)
   result=list(group=group,distanceMatrix=distanceMatrix,originalResult=group)
@@ -251,10 +250,10 @@ ExecuteSNF<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,plot=TRUE)
 #' Execute the combined SNF (Similarity Network Fusion) and Consensus clustering
 #'
 #' This function is a combined process of SNF and Consensus Clustering for cancer subtypes identification.
-#' First it applied SNF to get the fusion patients similarity matrix. Then use this 
+#' First it applied SNF to get the fusion patients similarity matrix. Then use this
 #' fusion patients similarity matrix as the sample distance for Consensus Clustering.
 #'
-#' @param datasets A list containing data matrices. For each data matrix, 
+#' @param datasets A list containing data matrices. For each data matrix,
 #' the rows represent genomic features, and the columns represent samples. Same as ExecuteSNF
 #' @param clusterNum A integer representing the return cluster number. Same as ExecuteSNF
 #' @param K Number of nearest neighbors. Same as ExecuteSNF
@@ -266,40 +265,40 @@ ExecuteSNF<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,plot=TRUE)
 #' @param title character value for output directory. This title can be an absolute or relative path. Same as ExecuteCC
 #' @param plot Same as ExecuteCC
 #' @param finalLinkage Same as ExecuteCC
-#' 
+#'
 #' @return Same as the ExecuteCC(). A list with the following elements.
 #'\itemize{
 #'  \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
-#'   
-#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+#'
+#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group
 #'   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
 #'   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
-#'   
+#'
 #'  \item \strong{distanceMatrix} : It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
-#'   
+#'
 #'   We extracted this matrix from the algorithmic procedure because it is useful for similarity analysis among the samples based on the clustering results.
-#'   
+#'
 #'  \item \strong{originalResult} : The clustering result of the original function "ConsensusClusterPlus()"
-#'  
+#'
 #'  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
 #'  }
-#'  
+#'
 #' @seealso \code{\link{ExecuteSNF}} \code{\link{ExecuteCC}}
 #' @examples
-#' 
+#'
 #' data(GeneExp)
 #' data(miRNAExp)
 #' GBM=list(GeneExp,miRNAExp)
 #' result=ExecuteSNF.CC(GBM, clusterNum=3, K=20, alpha=0.5, t=20,
-#'                     maxK = 5, pItem = 0.8,reps=500, 
-#'                     title = "GBM", plot = "png", 
+#'                     maxK = 5, pItem = 0.8,reps=500,
+#'                     title = "GBM", plot = "png",
 #'                     finalLinkage ="average")
 #' result$group
 #' @export
 #'
 ExecuteSNF.CC<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,
-                        maxK = 10, pItem = 0.8,reps=500, 
-                        title = "ConsensusClusterResult", plot = "png", 
+                        maxK = 10, pItem = 0.8,reps=500,
+                        title = "ConsensusClusterResult", plot = "png",
                         finalLinkage ="average")
 {
   W_temp=list()
@@ -321,18 +320,18 @@ ExecuteSNF.CC<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,
 #' Execute the WSNF(Weighted Similarity Network Fusion)
 #'
 #' WSNF is a caner subtype identificaton method with the assistance of the gene regulatory network information. The basic idea of the WSNF is
-#' to set the different regulatory importance(ranking) for each feature. In the WSNF manuscript, WSNF makes use of the miRNA-TF-mRNA regulatory 
+#' to set the different regulatory importance(ranking) for each feature. In the WSNF manuscript, WSNF makes use of the miRNA-TF-mRNA regulatory
 #' network to take the importance of the features into consideration.
-#' 
+#'
 #' @param datasets A list containing data matrices. For each data matrix, the rows represent genomic features, and the columns represent samples.
 #' @param feature_ranking A list containing numeric vetors. The length of the feature_ranking list should equal to the length of datasets list.
-#' For each numeric vetor represents the ranking of each feature in the corresponding data matrix. The order of the ranking should also mathch 
-#' the order of the features in the corresponding data matrix.  
-#' We proive a ranking list for most mRNA, TF(transcription factor) and miRNA features. The ranking for features caculated based on the miRNA-TF-miRNA 
-#' regulatory network which was promoted in our published work: Identifying Cancer Subtypes from miRNA-TF-mRNA Regulatory Networks and 
+#' For each numeric vetor represents the ranking of each feature in the corresponding data matrix. The order of the ranking should also mathch
+#' the order of the features in the corresponding data matrix.
+#' We proive a ranking list for most mRNA, TF(transcription factor) and miRNA features. The ranking for features caculated based on the miRNA-TF-miRNA
+#' regulatory network which was promoted in our published work: Identifying Cancer Subtypes from miRNA-TF-mRNA Regulatory Networks and
 #' Expression Data(PLos One,2016).
 #' @param beta A tuning parameter for the feature_ranking contributes the weight of each feature. \cr
-#' A linear model is applied to integrate feature_ranking and MAD(median absolute deviation) to generated the final weight for each feature using 
+#' A linear model is applied to integrate feature_ranking and MAD(median absolute deviation) to generated the final weight for each feature using
 #' for the algorithm. The final weight is cauculated as the formula below:\cr
 #' Weight(f_i)=beta * feature_ranking + (1-beta) MAD(f_i)
 #' @param clusterNum A integer representing the return cluster number
@@ -340,26 +339,26 @@ ExecuteSNF.CC<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,
 #' @param alpha Variance for local model
 #' @param t Number of iterations for the diffusion process
 #' @param plot Logical value. If true, draw the heatmap for the distance matrix with samples ordered to form clusters.
-#' 
+#'
 #' @return A list with the following elements.
 #'\itemize{
 #'  \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
-#'   
-#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+#'
+#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group
 #'   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
 #'   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
-#'   
+#'
 #'  \item \strong{distanceMatrix} : It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
-#'   
+#'
 #'   We extracted this matrix from the algorithmic procedure because it is useful for similarity analysis among the samples based on the clustering results.
-#'   
+#'
 #'  \item \strong{originalResult} : The clustering result of the original SNF algorithm.
-#'  
+#'
 #'  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
 #'  }
-#'  
+#'
 #' @seealso \code{\link{ExecuteSNF}}
-#' @references 
+#' @references
 #' Xu, T., Le, T. D., Liu, L., Wang, R., Sun, B., & Li, J. (2016). Identifying cancer subtypes from mirna-tf-mrna regulatory networks and expression data. PloS one, 11(4), e0152792.
 #' @examples
 #' data(GeneExp)
@@ -373,7 +372,7 @@ ExecuteSNF.CC<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,
 #' gene_ranking=data.frame(gene_Name,Ranking[index1,],stringsAsFactors=FALSE)
 #' index2=which(is.na(gene_ranking$ranking_default))
 #' gene_ranking$ranking_default[index2]=min(gene_ranking$ranking_default,na.rm =TRUE)
-#' 
+#'
 #' ####Retrieve the feature ranking for miRNAs
 #' miRNA_ID=rownames(miRNAExp)
 #' index3=match(miRNA_ID,Ranking$mRNA_TF_miRNA_ID)
@@ -382,15 +381,15 @@ ExecuteSNF.CC<-function(datasets, clusterNum, K=20, alpha=0.5, t=20,
 #' miRNA_ranking$ranking_default[index4]=min(miRNA_ranking$ranking_default,na.rm =TRUE)
 #' ###Clustering
 #' ranking1=list(gene_ranking$ranking_default ,miRNA_ranking$ranking_default)
-#' result1=ExecuteWSNF(datasets=GBM, feature_ranking=ranking1, beta = 0.8, clusterNum=3, 
+#' result1=ExecuteWSNF(datasets=GBM, feature_ranking=ranking1, beta = 0.8, clusterNum=3,
 #'                    K = 20,alpha = 0.5, t = 20, plot = TRUE)
-#' 
+#'
 #' ###2. User input ranking
 #' # Fabricate a ranking list for demonstrating the examples.
 #' ranking2=list(runif(nrow(GeneExp), min=0, max=1),runif(nrow(miRNAExp), min=0, max=1))
-#' result2=ExecuteWSNF(datasets=GBM, feature_ranking=ranking2, beta = 0.8, clusterNum=3, 
+#' result2=ExecuteWSNF(datasets=GBM, feature_ranking=ranking2, beta = 0.8, clusterNum=3,
 #'                    K = 20,alpha = 0.5, t = 20, plot = TRUE)
-#' 
+#'
 #' @export
 #'
 ExecuteWSNF<-function(datasets,feature_ranking,beta=0.8,clusterNum,K=20, alpha=0.5, t=20,plot=TRUE)
@@ -412,12 +411,12 @@ ExecuteWSNF<-function(datasets,feature_ranking,beta=0.8,clusterNum,K=20, alpha=0
       }
       W = SNF(W_temp, K=K, t=t)
       group =spectralClustering(W,clusterNum)
-      
+
       diag(W)=0
       diag(W)=max(W)
       distanceMatrix=W
       attr(distanceMatrix,'class')="Similarity"
-      
+
       if(plot)
         displayClusters(W, group)
       result=list(group=group,distanceMatrix=distanceMatrix,originalResult=group)
@@ -435,39 +434,39 @@ result
 #' Execute Consensus NMF (Nonnegative matrix factorization)
 #'
 #' Brunet applied nonnegative matrix factorization (NMF) to analyze the Gene MicroArray dataset in 2004. In the original paper, the author
-#' proved that NMF is an efficient method for distinct molecular patterns identification and provides a powerful method 
-#' for class discovery. This method was implemented in an R package "NMF". Here we applied the "NMF" package to 
+#' proved that NMF is an efficient method for distinct molecular patterns identification and provides a powerful method
+#' for class discovery. This method was implemented in an R package "NMF". Here we applied the "NMF" package to
 #' conduct the cancer subtypes identification. We write a shell to unify the input and output format.
-#' It is helpful for the standardized flow of cancer subtypes analysis and validation. 
-#' The R package "NMF" should be installed. 
-#' 
+#' It is helpful for the standardized flow of cancer subtypes analysis and validation.
+#' The R package "NMF" should be installed.
+#'
 #' @importFrom NMF nmf predict
 #' @param datasets A data matrix or a list containing data matrices. For each data matrix, the rows represent genomic features, and the columns represent samples.
 #' If the matrices have negative values, first the negative values will be set to zero to get a matrix 1;
 #' all the positive values will be set to zero to get the matrix 2; then a new matrix with all positive values will be
 #' get by concatenating matrix1 and -maxtrix2.
-#'  
-#' 
+#'
+#'
 #' @param clusterNum Number of subtypes for the samples
 #' @param nrun Number of runs to perform NMF. A default of 30 runs are performed, allowing the computation of a consensus matrix that is used in selecting the best result for cancer subtypes identification as Consensus Clustering method.
-#' @return 
+#' @return
 #' A list with the following elements.
 #'\itemize{
 #'  \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
-#'   
-#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+#'
+#'   This is the most important result for all clustering methods, so we place it as the first component. The format of group
 #'   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
 #'   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
-#'   
+#'
 #'  \item \strong{distanceMatrix} : It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
-#'   
+#'
 #'   We extracted this matrix from the algorithmic procedure because it is useful for similarity analysis among the samples based on the clustering results.
-#'   
+#'
 #'  \item \strong{originalResult} : A NMFfitX class from the result of function "nmf()".
-#'  
+#'
 #'  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
 #'  }
-#'  
+#'
 #' @details
 #'  If the data is a list containing the matched mutli-genomics data matrices like the input as "ExecuteiCluster()" and "ExecuteSNF()",
 #'   The data matrices in the list are concatenated according to samples. The concatenated data matrix is the samples with a long features (all features in the data list).
@@ -475,17 +474,17 @@ result
 
 #' @references
 #' [1] Brunet, Jean-Philippe, Pablo Tamayo, Todd R Golub, and Jill P Mesirov. "Metagenes and Molecular Pattern Discovery Using Matrix Factorization." Proceedings of the National Academy of Sciences 101, no. 12 (2004):4164-69.
-#' 
+#'
 #' [2] Gaujoux, Renaud, and Cathal Seoighe. "A Flexible R Package for Nonnegative Matrix Factorization." BMC Bioinformatics 11 (2010): 367. doi:10.1186/1471-2105-11-367.
 #' @seealso \code{\link{nmf}}
-#' 
-#' 
+#'
+#'
 #' @examples
 #' data(GeneExp)
 #' #To save the  execution time, the nrun is set to 5, but the recommended value is 30.
 #' result=ExecuteCNMF(GeneExp,clusterNum=3,nrun=5)
 #' result$group
-#' 
+#'
 #' @export
 #'
 ExecuteCNMF<-function(datasets, clusterNum,nrun=30 )
@@ -505,10 +504,10 @@ ExecuteCNMF<-function(datasets, clusterNum,nrun=30 )
   index=which(rowSums(data1)==0)
   data1=data1[-index,]
   res=nmf(data1,rank=clusterNum,nrun=nrun)
-  
+
   distanceMatrix=slot(res,"consensus")
   attr(distanceMatrix,'class')="Similarity"
-  
+
   group=as.numeric(as.vector(predict(res)))
   result=list(group=group,distanceMatrix=distanceMatrix,originalResult=res)
 }

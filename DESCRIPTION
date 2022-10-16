@@ -1,11 +1,11 @@
 Package: CancerSubtypes
 Type: Package
 Title: Cancer subtypes identification, validation and visualization based on multiple genomic data sets
-Version: 1.23.0
+Version: 1.23.1
 Date: 2016-06-30
 Authors@R: person("Taosheng", "Xu", email = "taosheng.x@gmail.com",role = c("aut", "cre"))
 Depends: R (>= 4.0), sigclust, NMF
-Imports: iCluster, cluster, impute, limma, ConsensusClusterPlus, grDevices, survival
+Imports: cluster, impute, limma, ConsensusClusterPlus, grDevices, survival
 Description: CancerSubtypes integrates the current common computational biology methods for cancer subtypes identification and provides a standardized framework for cancer subtype analysis based multi-omics data, such as gene expression, miRNA expression, DNA methylation and others.
 License: GPL (>= 2)
 Suggests: BiocGenerics, knitr, RTCGA.mRNA, rmarkdown

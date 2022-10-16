@@ -23,28 +23,28 @@ ExecuteSNF(datasets, clusterNum, K = 20, alpha = 0.5, t = 20, plot = TRUE)
 A list with the following elements.
 \itemize{
  \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
-  
-  This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+
+  This is the most important result for all clustering methods, so we place it as the first component. The format of group
   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
-  
+
  \item \strong{distanceMatrix} : It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
-  
+
   We extracted this matrix from the algorithmic procedure because it is useful for similarity analysis among the samples based on the clustering results.
-  
+
  \item \strong{originalResult} : The clustering result of the original SNF algorithm"
- 
+
  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
  }
 }
 \description{
 SNF is a multi-omics data processing method that constructs a fusion patient similarity network
-by integrating the patient similarity obtained from each of the genomic data types. 
+by integrating the patient similarity obtained from each of the genomic data types.
 SNF calculates the similarity between patients using each single data type separately. The similarities
-between patients from different data types are then integrated by a cross-network diffusion process to construct the fusion patient similarity matrix. 
+between patients from different data types are then integrated by a cross-network diffusion process to construct the fusion patient similarity matrix.
 Finally, a clustering method is applied to the fusion patient similarity matrix to cluster patients into different groups, which imply different cancer subtypes.
-This function is based on the R package "SNFtool". 
-The R package "SNFtool" should be installed. 
+This function is based on the R package "SNFtool".
+The R package "SNFtool" should be installed.
 We write a function to integrate the clustering process and unify the input and output format.
 It is helpful for the standardized flow of cancer subtypes analysis and validation.\cr
 Please note: The data matrices are transposed in our function comparing to the original R package "SNFtools".

@@ -31,29 +31,29 @@ In order to unify the input parameter with other clustering methods, the data ma
 A list with the following elements.
 \itemize{
   \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
-  
-  This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+
+  This is the most important result for all clustering methods, so we place it as the first component. The format of group
   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
-  
+
  \item \strong{originalResult} : The clustering result of the original function "iCluster2()".
- 
+
  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
  }
 }
 \description{
-Shen (2009) proposed a latent variable regression with a lasso constraint for joint modeling of multiple omics 
+Shen (2009) proposed a latent variable regression with a lasso constraint for joint modeling of multiple omics
 data types to identify common latent variables that can be used to cluster patient samples into biologically and clinically relevant disease subtypes.\cr
-This function is based on the R package "iCluster". 
-The R package "iCluster" should be installed. 
+This function is based on the R package "iCluster".
+The R package "iCluster" should be installed.
 We write a shell to unify the input and output format.
-It is helpful for the standardized flow of cancer subtypes analysis and validation. 
+It is helpful for the standardized flow of cancer subtypes analysis and validation.
 The parameters is compatible to the original R package "iCluster" function "iCluster2()".\cr
 Please note: The data matrices are transposed in our function comparing to the original R package "iCluster" on the behalf of the unified input format with other functions.
 We try to build a standardized flow for cancer subtypes analysis and validation.
 }
 \details{
-For iCluster algorithm, it cannot process high-dimensional data, otherwise it is very very time-consuming or reports a mistake.  
+For iCluster algorithm, it cannot process high-dimensional data, otherwise it is very very time-consuming or reports a mistake.
  Based on test, it could smoothly run for the matrix with around 1500 features. Normally it need feature selection step first to reduce feature number.
 }
 \examples{

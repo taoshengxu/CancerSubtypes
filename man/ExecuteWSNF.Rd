@@ -19,14 +19,14 @@ ExecuteWSNF(
 \item{datasets}{A list containing data matrices. For each data matrix, the rows represent genomic features, and the columns represent samples.}
 
 \item{feature_ranking}{A list containing numeric vetors. The length of the feature_ranking list should equal to the length of datasets list.
-For each numeric vetor represents the ranking of each feature in the corresponding data matrix. The order of the ranking should also mathch 
-the order of the features in the corresponding data matrix.  
-We proive a ranking list for most mRNA, TF(transcription factor) and miRNA features. The ranking for features caculated based on the miRNA-TF-miRNA 
-regulatory network which was promoted in our published work: Identifying Cancer Subtypes from miRNA-TF-mRNA Regulatory Networks and 
+For each numeric vetor represents the ranking of each feature in the corresponding data matrix. The order of the ranking should also mathch
+the order of the features in the corresponding data matrix.
+We proive a ranking list for most mRNA, TF(transcription factor) and miRNA features. The ranking for features caculated based on the miRNA-TF-miRNA
+regulatory network which was promoted in our published work: Identifying Cancer Subtypes from miRNA-TF-mRNA Regulatory Networks and
 Expression Data(PLos One,2016).}
 
 \item{beta}{A tuning parameter for the feature_ranking contributes the weight of each feature. \cr
-A linear model is applied to integrate feature_ranking and MAD(median absolute deviation) to generated the final weight for each feature using 
+A linear model is applied to integrate feature_ranking and MAD(median absolute deviation) to generated the final weight for each feature using
 for the algorithm. The final weight is cauculated as the formula below:\cr
 Weight(f_i)=beta * feature_ranking + (1-beta) MAD(f_i)}
 
@@ -44,23 +44,23 @@ Weight(f_i)=beta * feature_ranking + (1-beta) MAD(f_i)}
 A list with the following elements.
 \itemize{
  \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
-  
-  This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+
+  This is the most important result for all clustering methods, so we place it as the first component. The format of group
   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
-  
+
  \item \strong{distanceMatrix} : It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
-  
+
   We extracted this matrix from the algorithmic procedure because it is useful for similarity analysis among the samples based on the clustering results.
-  
+
  \item \strong{originalResult} : The clustering result of the original SNF algorithm.
- 
+
  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
  }
 }
 \description{
 WSNF is a caner subtype identificaton method with the assistance of the gene regulatory network information. The basic idea of the WSNF is
-to set the different regulatory importance(ranking) for each feature. In the WSNF manuscript, WSNF makes use of the miRNA-TF-mRNA regulatory 
+to set the different regulatory importance(ranking) for each feature. In the WSNF manuscript, WSNF makes use of the miRNA-TF-mRNA regulatory
 network to take the importance of the features into consideration.
 }
 \examples{
@@ -84,13 +84,13 @@ index4=which(is.na(miRNA_ranking$ranking_default))
 miRNA_ranking$ranking_default[index4]=min(miRNA_ranking$ranking_default,na.rm =TRUE)
 ###Clustering
 ranking1=list(gene_ranking$ranking_default ,miRNA_ranking$ranking_default)
-result1=ExecuteWSNF(datasets=GBM, feature_ranking=ranking1, beta = 0.8, clusterNum=3, 
+result1=ExecuteWSNF(datasets=GBM, feature_ranking=ranking1, beta = 0.8, clusterNum=3,
                    K = 20,alpha = 0.5, t = 20, plot = TRUE)
 
 ###2. User input ranking
 # Fabricate a ranking list for demonstrating the examples.
 ranking2=list(runif(nrow(GeneExp), min=0, max=1),runif(nrow(miRNAExp), min=0, max=1))
-result2=ExecuteWSNF(datasets=GBM, feature_ranking=ranking2, beta = 0.8, clusterNum=3, 
+result2=ExecuteWSNF(datasets=GBM, feature_ranking=ranking2, beta = 0.8, clusterNum=3,
                    K = 20,alpha = 0.5, t = 20, plot = TRUE)
 
 }

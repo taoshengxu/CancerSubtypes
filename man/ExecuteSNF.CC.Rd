@@ -19,7 +19,7 @@ ExecuteSNF.CC(
 )
 }
 \arguments{
-\item{datasets}{A list containing data matrices. For each data matrix, 
+\item{datasets}{A list containing data matrices. For each data matrix,
 the rows represent genomic features, and the columns represent samples. Same as ExecuteSNF}
 
 \item{clusterNum}{A integer representing the return cluster number. Same as ExecuteSNF}
@@ -46,23 +46,23 @@ the rows represent genomic features, and the columns represent samples. Same as 
 Same as the ExecuteCC(). A list with the following elements.
 \itemize{
  \item \strong{group} : A vector represent the group of cancer subtypes. The order is corresponding to the the samples in the data matrix.\cr
-  
-  This is the most important result for all clustering methods, so we place it as the first component. The format of group 
+
+  This is the most important result for all clustering methods, so we place it as the first component. The format of group
   is consistent across different algorithms and therefore makes it convenient for downstream analyses. Moreover, the format
   of group is also compatible with the K-means result and the hclust (after using the cutree() function).
-  
+
  \item \strong{distanceMatrix} : It is a sample similarity matrix. The more large value between samples in the matrix, the more similarity the samples are.
-  
+
   We extracted this matrix from the algorithmic procedure because it is useful for similarity analysis among the samples based on the clustering results.
-  
+
  \item \strong{originalResult} : The clustering result of the original function "ConsensusClusterPlus()"
- 
+
  Different clustering algorithms have different output formats. Although we have the group component which has consistent format for all of the algorithms (making it easy for downstream analyses), we still keep the output from the original algorithms.
  }
 }
 \description{
 This function is a combined process of SNF and Consensus Clustering for cancer subtypes identification.
-First it applied SNF to get the fusion patients similarity matrix. Then use this 
+First it applied SNF to get the fusion patients similarity matrix. Then use this
 fusion patients similarity matrix as the sample distance for Consensus Clustering.
 }
 \examples{
@@ -71,8 +71,8 @@ data(GeneExp)
 data(miRNAExp)
 GBM=list(GeneExp,miRNAExp)
 result=ExecuteSNF.CC(GBM, clusterNum=3, K=20, alpha=0.5, t=20,
-                    maxK = 5, pItem = 0.8,reps=500, 
-                    title = "GBM", plot = "png", 
+                    maxK = 5, pItem = 0.8,reps=500,
+                    title = "GBM", plot = "png",
                     finalLinkage ="average")
 result$group
 }
