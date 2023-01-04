@@ -5,7 +5,7 @@ Version: 1.24.1
 Date: 2023-01-09
 Authors@R: person("Taosheng", "Xu", email = "taosheng.x@gmail.com",role = c("aut", "cre"))
 Depends: R (>= 4.0), sigclust, NMF
-Imports: iCluster, cluster, impute, limma, ConsensusClusterPlus,
+Imports: iClusterPlus, cluster, impute, limma, ConsensusClusterPlus,
         grDevices, survival
 Description: CancerSubtypes integrates the current common computational biology methods for cancer subtypes identification and provides a standardized framework for cancer subtype analysis based multi-omics data, such as gene expression, miRNA expression, DNA methylation and others.
 License: GPL (>= 2)
