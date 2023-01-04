@@ -3,7 +3,9 @@ Type: Package
 Title: Cancer subtypes identification, validation and visualization based on multiple genomic data sets
 Version: 1.24.1
 Date: 2023-01-09
-Authors@R: person("Taosheng", "Xu", email = "taosheng.x@gmail.com",role = c("aut", "cre"))
+Authors@R: c(
+        person("Yi", "Hsiao", email = "yihsiao@umich.edu", role = c("aut")),
+        person("Taosheng", "Xu", email = "taosheng.x@gmail.com", role = c("aut", "cre")))
 Depends: R (>= 4.0), sigclust, NMF
 Imports: iClusterPlus, cluster, impute, limma, ConsensusClusterPlus,
         grDevices, survival
@@ -12,15 +14,9 @@ License: GPL (>= 2)
 Suggests: RUnit, BiocGenerics, knitr, RTCGA.mRNA, rmarkdown
 VignetteBuilder: knitr
 biocViews: Clustering, Software, Visualization, GeneExpression
-URL: https://github.com/taoshengxu/CancerSubtypes
-BugReports: https://github.com/taoshengxu/CancerSubtypes/issues
+URL: https://github.com/hsiaoyi0504/CancerSubtypes
+BugReports: https://github.com/hsiaoyi0504/CancerSubtypes/issues
 RoxygenNote: 7.1.1
-git_url: https://git.bioconductor.org/packages/CancerSubtypes
-git_branch: RELEASE_3_15
-git_last_commit: 871bfcd
-git_last_commit_date: 2022-04-26
-Date/Publication: 2022-04-26
 NeedsCompilation: no
-Packaged: 2022-04-26 20:11:50 UTC; biocbuild
-Author: Taosheng Xu [aut, cre]
-Maintainer: Taosheng Xu <taosheng.x@gmail.com>
+Author: Yi Hsiao [aut], Taosheng Xu [aut, cre]
+Maintainer: Yi Hsiao <yihsiaox@umich.edu>
