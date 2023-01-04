@@ -2,11 +2,7 @@
 
 # CancerSubtypes: an R/Bioconductor package for molecular cancer subtype identification, validation, and visualization
 
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/taoshengxu/CancerSubtypes?branch=master&svg=true)](https://ci.appveyor.com/project/taoshengxu/CancerSubtypes)
-[![bioc](http://www.bioconductor.org/shields/downloads/CancerSubtypes.svg)](http://bioconductor.org/packages/stats/bioc/CancerSubtypes.html)
-[![bioc](http://www.bioconductor.org/shields/years-in-bioc/CancerSubtypes.svg)](http://bioconductor.org/packages/CancerSubtypes/)
-[![bioc](http://bioconductor.org/shields/availability/devel/CancerSubtypes.svg)](http://bioconductor.org/packages/CancerSubtypes/)
-[![bioc](http://www.bioconductor.org/shields/build/release/bioc/CancerSubtypes.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/CancerSubtypes.html)
+[![Build status](https://ci.appveyor.com/api/projects/status/mebn4w5k68jfryfq/branch/master?svg=true)](https://ci.appveyor.com/project/hsiaoyi0504/cancersubtypes/branch/master)
 
 # This is a fork repo, but you are welcome to use
 
