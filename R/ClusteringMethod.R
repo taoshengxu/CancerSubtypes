@@ -167,9 +167,9 @@ ExecuteiCluster<-function(datasets, k, lambda=NULL, scale=TRUE, scalar=FALSE, ma
   {
     data1[[i]]=t(datasets[[i]])
   }
-
-  fit=iCluster2(datasets=data1, k=k, lambda=lambda, scale=scale, scalar=scalar, max.iter=10)
-
+  
+  fit=iCluster2(datasets=data1, k=k, lambda=lambda, scale=scale, scalar=scalar, maxiter=max.iter)
+  
   plotiCluster(fit=fit, label=rownames(data1[[1]]))
   group=fit$clusters
   result=list(group=group,originalResult=fit)
