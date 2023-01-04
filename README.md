@@ -8,19 +8,22 @@
 [![bioc](http://bioconductor.org/shields/availability/devel/CancerSubtypes.svg)](http://bioconductor.org/packages/CancerSubtypes/)
 [![bioc](http://www.bioconductor.org/shields/build/release/bioc/CancerSubtypes.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/CancerSubtypes.html)
 
-The R/Bioconductor package `CancerSubtypes` integrates the current common computational biology methods for cancer subtypes identification and provides a standardized framework for cancer subtype analysis based multi-omics data, such as gene expression, miRNA expression, DNA methylation and others.
+# This is a fork repo, but you are welcome to use
+
+The original R/Bioconductor package `CancerSubtypes` integrates the current common computational biology methods for cancer subtypes identification and provides a standardized framework for cancer subtype analysis based multi-omics data, such as gene expression, miRNA expression, DNA methylation and others. This is a forked repo that I added additional features such as random seed (for reproducibility) and dependency updates (iCluster is removed from CRAN and there is an updated iClusterPlus).
 
 ------------------------------------------------------------------------
 
-## Installing CancerSubtypes
+## Installation
 
 ```{r,eval=FALSE,warning=FALSE,message=FALSE}
-devtools::install_github("taoshengxu/CancerSubtypes")
+renv::install("ConsensusClusterPlus")
+renv::install("hsiaoyi0504/CancerSubtypes")
 ```
 ------------------------------------------------------------------------
 
 ## Manual
-Tutorial and examples can be found  [here](https://bioconductor.org/packages/devel/bioc/vignettes/CancerSubtypes/inst/doc/CancerSubtypes-vignette.html).
+Tutorial and examples can be found in original CancerSubtypes [here](https://bioconductor.org/packages/devel/bioc/vignettes/CancerSubtypes/inst/doc/CancerSubtypes-vignette.html).
 
 <!--(http://htmlpreview.github.io/?https://github.com/taoshengxu/Documents/blob/master/CancerSubtypes-vignette.html)-->
 
@@ -28,7 +31,7 @@ Tutorial and examples can be found  [here](https://bioconductor.org/packages/dev
 ------------------------------------------------------------------------
 
 ## Citation
-Please cite the following article when using `CancerSubtypes`:
+Please cite the original CancerSubtypes article and this customized fork [https://github.com/hsiaoyi0504/CancerSubtypes](https://github.com/hsiaoyi0504/CancerSubtypes) when using this customized version:
 
 [![doi](https://img.shields.io/badge/doi-10.1093/bioinformatics/btx378-green.svg?style=flat)](https://doi.org/10.1093/bioinformatics/btx378) [![citation](https://img.shields.io/badge/cited%20by-34-green.svg?style=flat)](https://doi.org/10.1093/bioinformatics/btx378) [![Altmetric](https://img.shields.io/badge/Altmetric-2-green.svg?style=flat)](https://www.altmetric.com/details/21038105)
 
