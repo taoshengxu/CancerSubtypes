@@ -12,7 +12,7 @@ install:
 
 environment:
   global:
-  PKGTYPE: both
+    PKGTYPE: both
   
   matrix:
   - R_VERSION: devel
