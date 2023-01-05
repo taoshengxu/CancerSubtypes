@@ -18,22 +18,26 @@ environment:
   - R_VERSION: 4.1.0
     R_ARCH: x64
     BIOC_USE_DEVEL: TRUE
-    GCC_PATH: mingw_32
+    GCC_PATH: mingw_64
+    USE_RTOOLS: true
 
   - R_VERSION: 4.1.0
     R_ARCH: x64
     BIOC_USE_DEVEL: FALSE
-    GCC_PATH: mingw_32
+    GCC_PATH: mingw_64
+    USE_RTOOLS: true
 
   - R_VERSION: 4.1.3
     R_ARCH: x64
     BIOC_USE_DEVEL: TRUE
-    GCC_PATH: mingw_32
+    GCC_PATH: mingw_64
+    USE_RTOOLS: true
  
   - R_VERSION: 4.1.3
     R_ARCH: x64
     BIOC_USE_DEVEL: FALSE
-    CC_PATH: mingw_32
+    CC_PATH: mingw_64
+    USE_RTOOLS: true
   
   - R_VERSION: 4.2.0
     R_ARCH: x64
