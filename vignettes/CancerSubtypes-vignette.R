@@ -68,7 +68,14 @@ data1=FSbyCox(GeneExp,time,status,cutoff=0.05)
 #  data1=FSbyVar(GeneExp, cut.type="topk",value=1000)
 #  data2=FSbyVar(miRNAExp, cut.type="topk",value=300)
 #  GBM=list(GeneExp=data1,miRNAExp=data2)
-#  result=ExecuteiCluster(datasets=GBM, k=3, lambda=list(0.44,0.33,0.28))
+#  lambda=alist()
+#  lambda[[1]] = 30
+#  lambda[[2]] = c(20,1)
+#  lambda[[3]] = c(20,20)
+#  lambda[[4]] = 30
+#  lambda[[5]] = c(30,20)
+#  method = c('lasso', 'enet', 'flasso', 'glasso', 'gflasso')
+#  result=ExecuteiCluster(GBM, 3, lambda=lambda, method=method)
 
 ## ----eval = FALSE--------------------------------------------------------
 #  data(GeneExp)

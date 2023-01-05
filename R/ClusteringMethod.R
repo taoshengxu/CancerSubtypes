@@ -156,11 +156,18 @@ ExecuteCC<-function(clusterNum,
 #' data1=FSbyVar(GeneExp, cut.type="topk",value=500)
 #' data2=FSbyVar(miRNAExp, cut.type="topk",value=100)
 #' GBM=list(GeneExp=data1,miRNAExp=data2)
-#' result=ExecuteiCluster(datasets=GBM, k=3, lambda=list(0.44,0.33,0.28))
+#' lambda=alist()
+#' lambda[[1]] = 30
+#' lambda[[2]] = c(20,1)
+#' lambda[[3]] = c(20,20)
+#' lambda[[4]] = 30
+#' lambda[[5]] = c(30,20)
+#' method = c('lasso', 'enet', 'flasso', 'glasso', 'gflasso')
+#' result=ExecuteiCluster(GBM, 3, lambda=lambda, method=method)
 #' result$group
 #' @export
 #'
-ExecuteiCluster<-function(datasets, k, lambda=NULL, max.iter=10)
+ExecuteiCluster<-function(datasets, k, lambda=NULL, method=NULL, max.iter=10)
 {
   data1=list()
   for(i in 1:length(datasets))
@@ -168,7 +175,7 @@ ExecuteiCluster<-function(datasets, k, lambda=NULL, max.iter=10)
     data1[[i]]=t(datasets[[i]])
   }
   
-  fit=iCluster2(datasets=data1, k=k, lambda=lambda, maxiter=max.iter) 
+  fit=iCluster2(data1, k, lambda=lambda, method=method, maxiter=max.iter) 
   
   plotiCluster(fit=fit, label=rownames(data1[[1]]))
   group=fit$clusters

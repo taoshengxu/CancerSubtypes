@@ -460,7 +460,14 @@ data(miRNAExp)
 data1=FSbyVar(GeneExp, cut.type=&quot;topk&quot;,value=1000)
 data2=FSbyVar(miRNAExp, cut.type=&quot;topk&quot;,value=300)
 GBM=list(GeneExp=data1,miRNAExp=data2)
-result=ExecuteiCluster(datasets=GBM, k=3, lambda=list(0.44,0.33,0.28))</code></pre>
+lambda=alist()
+lambda[[1]] = 30
+lambda[[2]] = c(20,1)
+lambda[[3]] = c(20,20)
+lambda[[4]] = 30
+lambda[[5]] = c(30,20)
+method = c('lasso', 'enet', 'flasso', 'glasso', 'gflasso')
+result=ExecuteiCluster(GBM, 3, lambda=lambda, method=method)</code></pre>
 </div>
 <div id="similarity-network-fusion-for-cancer-subtype-identification" class="section level3">
 <h3>3.4 Similarity network fusion for cancer subtype identification</h3>
