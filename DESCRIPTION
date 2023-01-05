@@ -11,7 +11,7 @@ Imports: iClusterPlus, cluster, impute, limma, ConsensusClusterPlus,
         grDevices, survival
 Description: CancerSubtypes integrates the current common computational biology methods for cancer subtypes identification and provides a standardized framework for cancer subtype analysis based multi-omics data, such as gene expression, miRNA expression, DNA methylation and others.
 License: GPL (>= 2)
-Suggests: RUnit, BiocGenerics, knitr, RTCGA.mRNA, rmarkdown
+Suggests: RUnit, BiocGenerics, knitr, RTCGA.mRNA, purrr, rmarkdown
 VignetteBuilder: knitr
 biocViews: Clustering, Software, Visualization, GeneExpression
 URL: https://github.com/hsiaoyi0504/CancerSubtypes
