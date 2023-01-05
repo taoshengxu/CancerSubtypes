@@ -160,7 +160,7 @@ ExecuteCC<-function(clusterNum,
 #' result$group
 #' @export
 #'
-ExecuteiCluster<-function(datasets, k, lambda=NULL, scale=TRUE, max.iter=10)
+ExecuteiCluster<-function(datasets, k, lambda=NULL, max.iter=10)
 {
   data1=list()
   for(i in 1:length(datasets))
@@ -168,7 +168,7 @@ ExecuteiCluster<-function(datasets, k, lambda=NULL, scale=TRUE, max.iter=10)
     data1[[i]]=t(datasets[[i]])
   }
   
-  fit=iCluster2(datasets=data1, k=k, lambda=lambda, scale=scale, maxiter=max.iter) 
+  fit=iCluster2(datasets=data1, k=k, lambda=lambda, maxiter=max.iter) 
   
   plotiCluster(fit=fit, label=rownames(data1[[1]]))
   group=fit$clusters
